@@ -18,7 +18,7 @@ const SideBar = styled(Paper)({
     border: 1,
 });
 const Item = styled(Paper)({
-  textAlign: 'center',
+  // textAlign: 'center',
   color: 'secondary.contratext',
   height: 130,
   lineHeight: '60px',
@@ -29,7 +29,89 @@ const Item = styled(Paper)({
 function Main() {
 
   const [sort, setSort] = useState(0);
-  const [restaurants ] = useState([1,2,3,4,5,6,7,8]);
+  const [restaurants ] = useState([
+      {
+          name: "샤브20",
+          where: "장성동",
+          menu: "평일런치 <br> 평일디너,주말,공휴일",
+          category: "육류",
+          recommendation: true,
+          star: 4.8,
+          heart: 2,
+          comment: 5,
+          // img
+      },
+    {
+        name: "언양닭칼국수",
+        where: "흥해읍",
+        menu: "닭칼국수 언양식칼국수",
+        category: "한식",
+        recommendation: false,
+        star: 5.0,
+        heart: 7,
+        comment: 9,
+    },
+    {
+        name: "라멘구루마",
+        where: "양덕동",
+        menu: "부타시오라멘 아카이부타시오라멘",
+        category: "회 일식",
+        recommendation: false,
+        star: 5.0,
+        heart: 7,
+        comment: 5,
+    },
+    {
+        name: "으뜸이네",
+        where: "양덕동",
+        menu: "순쌀떡볶이 찰순대",
+        category: "분식",
+        recommendation: false,
+        star: 5.0,
+        heart: 2,
+        comment: 4,
+    },
+    {
+        name: "류&돈까스",
+        where: "양덕동",
+        menu: "히레(안심)까스(3pcs) 로스(등심)까스",
+        category: "회 일식",
+        recommendation: false,
+        star: 5.0,
+        heart: 3,
+        comment: 3
+    },
+    {
+        name: "카페 1703",
+        where: "송라면",
+        menu: "1703에이드 햄치즈크레페",
+        category: "카페",
+        recommendation: false,
+        star: 5.0,
+        heart: 1,
+        comment: 3,
+    },
+      {
+          name: "샤브20",
+          where: "장성동",
+          menu: "평일런치 <br> 평일디너,주말,공휴일",
+          category: "육류",
+          recommendation: true,
+          star: 4.8,
+          heart: 2,
+          comment: 5,
+      },
+      {
+          name: "언양닭칼국수",
+          where: "흥해읍",
+          menu: "닭칼국수 언양식칼국수",
+          category: "한식",
+          recommendation: false,
+          star: 5.0,
+          heart: 7,
+          comment: 9,
+      },
+  ]);
   const [reviews ] = useState([
           {
             text: "맛있었어요ㅎㅎ",
@@ -99,7 +181,7 @@ function Main() {
                   </Box>
               </SideBar>
         </Grid>
-        <Grid item xs={10}>
+        <Grid item xs={10} >
             <Box
                 sx={{
                     px: 5,
@@ -128,14 +210,16 @@ function Main() {
             </Box>
 
             <Box
-                sx={{
+                 sx={{
+                     // display: 'inline',
                   p: 4, px : 5,
                   display: 'grid',
                   gridTemplateColumns: { md: '1fr 1fr' },
                   gap: 5,
                 }}
             >
-              {restaurants.map((index) => (
+              {restaurants.map((restaurant,index) => (
+
                   <Item key={index} elevation={5} sx={{
                               '&:hover': {
                                   // backgroundColor: 'action.hover',
@@ -143,7 +227,16 @@ function Main() {
                                   border: 1,
                               },
                           }}>
-                    {`음식점${index}`}
+                    {restaurant.name}{restaurant.category}{restaurant.where}{restaurant.menu}
+                      {restaurant.recommendation ? <Box component="span" sx={{}}>추천!</Box> : null}
+                      {restaurant.star}{restaurant.heart}{restaurant.comment}
+                      {/*<Box display="flex" justifyContent="flex-end" >{restaurant.name}</Box>*/}
+                      {/*<Box display="flex" justifyContent="flex-end" >{restaurant.name}</Box>*/}
+                      {/*<Box display="flex" justifyContent="flex-end" >{restaurant.name}</Box>*/}
+                      {/*<Box display="flex" justifyContent="flex-end" >{restaurant.name}</Box>*/}
+                      {/*<Typography variant="body1" >{restaurant.category}</Typography>*/}
+
+
                   </Item>
               ))}
             </Box>
