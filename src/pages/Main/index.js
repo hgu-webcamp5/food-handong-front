@@ -1,4 +1,3 @@
-import {TextFields} from "@mui/icons-material";
 import {
   Typography,
   styled,
@@ -10,14 +9,11 @@ import {
   Select,
   MenuItem,
   Grid,
-  makeStyles
 } from "@mui/material";
 import {useState} from "react";
-import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
-import {createTheme , ThemeProvider} from "@mui/material/styles";
 
 const SideBar = styled(Paper)({
-    height: 800,
+    height: 712,
     width: 220,
     border: 1,
 });
@@ -32,9 +28,9 @@ const Item = styled(Paper)({
 
 function Main() {
 
-  const [age, setAge] = useState(0);
-  const [restaurants , setRestaurants] = useState([1,2,3,4,5,6,7,8]);
-  const [reviews , setReviews] = useState([
+  const [sort, setSort] = useState(0);
+  const [restaurants ] = useState([1,2,3,4,5,6,7,8]);
+  const [reviews ] = useState([
           {
             text: "맛있었어요ㅎㅎ",
             name: "라멘구루마"
@@ -52,17 +48,13 @@ function Main() {
               name: "커피유야"
           }
       ]);
-  const [categories,setCategories] = useState(["전체보기 (12)" , "한식 (31)" ,
+  const [categories] = useState(["전체보기 (12)" , "한식 (31)" ,
 "회 ,일식 (26)" , "중식 (12)", "양식 (13)", "아시안 (2)" , "분식 (5)" , "육류 (18)" , "치킨 (3)" ,
 "술집 (5)" , "카페 (7)" , "디저트 (2)"]);
 
   const handleChange = (event) => {
-    setAge(event.target.value);
+    setSort(event.target.value);
   };
-
-
-
-
         return(
   <div>
     <div>
@@ -110,39 +102,47 @@ function Main() {
         <Grid item xs={10}>
             <Box
                 sx={{
-                    p: 2,
+                    px: 5,
+                    pt: 0,
                     display: 'grid',
                     gridTemplateColumns: { md: '1fr 1fr' },
-                    gap: 80,
+                    gap: 78,
                 }}
             >
-            <TextField id="outlined-basic" label="식당,음식,카테고리,지역 검색" variant="outlined" />
+            <TextField id="outlined-basic" size='small' label="식당, 음식, 카테고리, 지역 검색" variant="outlined"  sx={{ width:300}} InputProps={{ style: { height: "40px" } }}/>
             <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label"> Age</InputLabel>
+                <InputLabel id="demo-simple-select-label" > Sort</InputLabel>
                 <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    value={age}
-                    label="Age"
+                    value={sort}
+                    label="Sort"
                     onChange={handleChange}
+                    sx={{width:110, height:40}}
                 >
-                    <MenuItem value={10}>Ten</MenuItem>
-                    <MenuItem value={20}>Twenty</MenuItem>
-                    <MenuItem value={30}>Thirty</MenuItem>
+                    <MenuItem value={1}>평점 순</MenuItem>
+                    <MenuItem value={2}>좋아요 순</MenuItem>
+                    <MenuItem value={3}>댓글 순</MenuItem>
                 </Select>
             </FormControl>
             </Box>
 
             <Box
                 sx={{
-                  p: 3,
+                  p: 4, px : 5,
                   display: 'grid',
                   gridTemplateColumns: { md: '1fr 1fr' },
                   gap: 5,
                 }}
             >
               {restaurants.map((index) => (
-                  <Item key={index} elevation={5}>
+                  <Item key={index} elevation={5} sx={{
+                              '&:hover': {
+                                  // backgroundColor: 'action.hover',
+                                  opacity: [0.8, 0.8, 0.8],
+                                  border: 1,
+                              },
+                          }}>
                     {`음식점${index}`}
                   </Item>
               ))}
