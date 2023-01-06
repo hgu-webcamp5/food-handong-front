@@ -8,10 +8,20 @@ import {
   InputLabel,
   Select,
   MenuItem,
+
   Grid,
 } from "@mui/material";
 import {useState} from "react";
+import img1 from './img/main_img_1.jpg';
+import img2 from './img/main_img_2.jpg';
+import img3 from './img/main_img_3.jpg';
+import img4 from './img/main_img_4.jpg';
+import img5 from './img/main_img_5.jpg';
+import img6 from './img/main_img_6.jpg';
+import img7 from './img/main_img_7.jpg';
+import img8 from './img/main_img_8.jpg';
 
+import { Image } from 'mui-image'
 const SideBar = styled(Paper)({
     height: 712,
     width: 220,
@@ -33,83 +43,90 @@ function Main() {
       {
           name: "샤브20",
           where: "장성동",
-          menu: "평일런치 <br> 평일디너,주말,공휴일",
+          menu: "평일런치\n평일디너,주말,공휴일",
           category: "육류",
           recommendation: true,
           star: 4.8,
           heart: 2,
           comment: 5,
-          // img
+          img : `${img1}`,
       },
     {
         name: "언양닭칼국수",
         where: "흥해읍",
-        menu: "닭칼국수 언양식칼국수",
+        menu: "닭칼국수\n언양식칼국수",
         category: "한식",
         recommendation: false,
         star: 5.0,
         heart: 7,
         comment: 9,
+        img : `${img2}`,
     },
     {
         name: "라멘구루마",
         where: "양덕동",
-        menu: "부타시오라멘 아카이부타시오라멘",
+        menu: "부타시오라멘\n아카이부타시오라멘",
         category: "회 일식",
         recommendation: false,
         star: 5.0,
         heart: 7,
         comment: 5,
+        img : `${img3}`,
     },
     {
         name: "으뜸이네",
         where: "양덕동",
-        menu: "순쌀떡볶이 찰순대",
+        menu: "순쌀떡볶이\n찰순대",
         category: "분식",
         recommendation: false,
         star: 5.0,
         heart: 2,
         comment: 4,
+        img : `${img4}`,
     },
     {
         name: "류&돈까스",
         where: "양덕동",
-        menu: "히레(안심)까스(3pcs) 로스(등심)까스",
+        menu: "히레(안심)까스(3pcs)\n로스(등심)까스",
         category: "회 일식",
         recommendation: false,
         star: 5.0,
         heart: 3,
-        comment: 3
+        comment: 3,
+        img : `${img5}`,
     },
     {
         name: "카페 1703",
         where: "송라면",
-        menu: "1703에이드 햄치즈크레페",
+        menu: "1703에이드\n햄치즈크레페",
         category: "카페",
         recommendation: false,
         star: 5.0,
         heart: 1,
         comment: 3,
+        img : `${img6}`,
     },
       {
           name: "샤브20",
           where: "장성동",
-          menu: "평일런치 <br> 평일디너,주말,공휴일",
+          menu: "평일런치\n평일디너,주말,공휴일",
           category: "육류",
           recommendation: true,
           star: 4.8,
           heart: 2,
           comment: 5,
+          img : `${img7}`,
       },
       {
           name: "언양닭칼국수",
           where: "흥해읍",
-          menu: "닭칼국수 언양식칼국수",
+          menu: "닭칼국수\n언양식칼국수",
           category: "한식",
           recommendation: false,
           star: 5.0,
           heart: 7,
           comment: 9,
+          img : `${img8}`,
       },
   ]);
   const [reviews ] = useState([
@@ -226,10 +243,34 @@ function Main() {
                                   opacity: [0.8, 0.8, 0.8],
                                   border: 1,
                               },
+
                           }}>
-                    {restaurant.name}{restaurant.category}{restaurant.where}{restaurant.menu}
-                      {restaurant.recommendation ? <Box component="span" sx={{}}>추천!</Box> : null}
-                      {restaurant.star}{restaurant.heart}{restaurant.comment}
+                      <Box component="div" sx={{display: 'block', width:120 , height:120, float:"left"}}>
+                          <Image src={restaurant.img} width={120} height={120} alt="img" />
+
+                      </Box>
+                      <Box component="div" sx={{display: 'block'}}>
+                            <Typography variant="h6" sx={{float: 'left'}} >{restaurant.name}</Typography> <Typography variant="body2" sx={{float: 'right'}} >{restaurant.category}</Typography>
+                      </Box>
+                      <Box component="div" sx={{display: 'block', mt : 3.5}}>
+                          <Typography variant="body2" sx={{ mt:1, float:'left'}}>{restaurant.where}</Typography> {restaurant.recommendation ? <Typography variant="body2" sx={{ float:'right'}}>추천!</Typography> : null}
+                      </Box>
+                      <Box component="div" sx={{display: 'block' , mt: 8}}>
+                          <Typography variant="body2" sx={{whiteSpace: 'pre-wrap'}}>{restaurant.menu}</Typography>
+                      </Box>
+
+                      <Box>
+
+                          <Typography variant="body2" sx={{float:'right'}}>{restaurant.comment}</Typography>
+                          <Typography variant="body2" sx={{float:'right'}}>{restaurant.heart}</Typography>
+                          <Typography variant="body2" sx={{float:'right'}}>{restaurant.star}</Typography>
+
+                      </Box>
+
+                          {/*{restaurant.where}{restaurant.recommendation ? <Box component="span" sx={{}}>추천!</Box> : null}*/}
+                          {/*{restaurant.menu}*/}
+                          {/*{restaurant.star}{restaurant.heart}{restaurant.comment}*/}
+
                       {/*<Box display="flex" justifyContent="flex-end" >{restaurant.name}</Box>*/}
                       {/*<Box display="flex" justifyContent="flex-end" >{restaurant.name}</Box>*/}
                       {/*<Box display="flex" justifyContent="flex-end" >{restaurant.name}</Box>*/}
@@ -244,7 +285,6 @@ function Main() {
 
       </Grid>
   </div>
-
 
   </div>
 
