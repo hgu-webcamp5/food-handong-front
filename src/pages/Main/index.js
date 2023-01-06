@@ -11,6 +11,10 @@ import {
 
   Grid,
 } from "@mui/material";
+
+import SvgIcon from "@mui/material/SvgIcon";
+import { SvgIconComponent } from "@mui/icons-material";
+
 import {useState} from "react";
 import img1 from './img/main_img_1.jpg';
 import img2 from './img/main_img_2.jpg';
@@ -21,6 +25,10 @@ import img6 from './img/main_img_6.jpg';
 import img7 from './img/main_img_7.jpg';
 import img8 from './img/main_img_8.jpg';
 
+import StarIcon from '@mui/icons-material/Star';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
+
 import { Image } from 'mui-image'
 const SideBar = styled(Paper)({
     height: 785,
@@ -28,16 +36,37 @@ const SideBar = styled(Paper)({
     border: 1,
     pb: 30,
 });
-const Item = styled(Paper)({
-  // textAlign: 'center',
-  color: 'secondary.contratext',
-  height: 140,
-  lineHeight: '60px',
-});
+const Item = styled(Paper)(
+
+    {
+        // textAlign: 'center',
+        color: 'secondary.contratext',
+        height: 140,
+        lineHeight: '60px',
+
+    });
+
 
 // const lightTheme = createTheme({ palette: { mode: 'light' } });
 
+function Star(props) {
+    return (
+        <SvgIcon sx={{fontSize:15 }} component={StarIcon} inheritViewBox />
+    );
+}
+function Heart(props) {
+    return (
+        <SvgIcon sx={{fontSize:15, ml:1 }} component={FavoriteIcon} inheritViewBox />
+    );
+}
+function Comment(props) {
+    return (
+        <SvgIcon sx={{fontSize:15, ml:1  }} component={ChatBubbleIcon} inheritViewBox />
+    );
+}
+
 function Main() {
+
 
   const [sort, setSort] = useState(0);
   const [restaurants ] = useState([
@@ -239,35 +268,41 @@ function Main() {
             >
               {restaurants.map((restaurant,index) => (
 
-                  <Item key={index} elevation={5} sx={{
+                  <Item key={index} elevation={10} sx={{
                               '&:hover': {
                                   // backgroundColor: 'action.hover',
                                   opacity: [0.8, 0.8, 0.8],
                                   border: 1,
-
                               },
                             p:1,
                           }}>
                       <Box component="div" id="block-image" sx={{display: 'block', width:120 , height:120,
                           ml:-3, mt:-3, mr:2
                           , float:"left"}}>
-                          <Image src={restaurant.img} sx={{border:1 ,borderRadius:3}} alt="img" />
+                          <Image src={restaurant.img} sx={{border:1 ,borderRadius:3,borderColor:'text.secondary',
+                              '&:hover': {
+                                  // backgroundColor: 'action.hover',
+                                  borderColor: 'default',
+                                  opacity: [0.8, 0.8, 0.8],
+                                  border: 1,
+
+                              },}} alt="img" />
                       </Box>
                       <Box component="div" id="block-firstLine" sx={{display: 'block'}}>
-                            <Typography variant="h6" sx={{float: 'left'}} >{restaurant.name}</Typography> <Typography variant="body2" sx={{float: 'right'}} >{restaurant.category}</Typography>
+                            <Typography variant="h6" sx={{float: 'left'}} >{restaurant.name}</Typography> <Typography variant="body2" sx={{float: 'right', fontWeight: 'bold'}} >{restaurant.category}</Typography>
                       </Box>
                       <Box component="div" id="block-secondLine" sx={{display: 'block', mt : 3.5}}>
-                          <Typography variant="body2" sx={{ mt:1, float:'left'}}>{restaurant.where}</Typography> {restaurant.recommendation ? <Typography variant="body2" sx={{ float:'right'}}>추천!</Typography> : null}
+                          <Typography variant="body2" sx={{ mt:1, float:'left' , fontWeight:'bold'}}>{restaurant.where}</Typography> {restaurant.recommendation ? <Typography variant="body2" sx={{ float:'right', color:"error.main", fontWeight:'bold'}}>추천!</Typography> : null}
                       </Box>
                       <Box component="div" id="block-thirdLine" sx={{display: 'block' , mt: 8}}>
-                          <Typography variant="body2" sx={{whiteSpace: 'pre-wrap'}}>{restaurant.menu}</Typography>
+                          <Typography variant="body2" sx={{whiteSpace: 'pre-wrap', fontWeight:'bold' , color:'text.secondary'}}>{restaurant.menu}</Typography>
                       </Box>
 
                       <Box id="block-lastLine">
 
-                          <Typography  variant="body2" sx={{float:'right'}}>{restaurant.comment}</Typography>
-                          <Typography variant="body2" sx={{float:'right'}}>{restaurant.heart}</Typography>
-                          <Typography variant="body2" sx={{float:'right'}}>{restaurant.star}</Typography>
+                          <Typography  variant="body2" sx={{float:'right'}}><Comment /> {restaurant.comment}</Typography>
+                          <Typography variant="body2" sx={{float:'right'}}><Heart /> {restaurant.heart}</Typography>
+                          <Typography variant="body2" sx={{float:'right'}}><Star /> {restaurant.star}</Typography>
 
                       </Box>
 
