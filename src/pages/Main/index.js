@@ -23,14 +23,15 @@ import img8 from './img/main_img_8.jpg';
 
 import { Image } from 'mui-image'
 const SideBar = styled(Paper)({
-    height: 712,
-    width: 220,
+    height: 785,
+    width: 200,
     border: 1,
+    pb: 30,
 });
 const Item = styled(Paper)({
   // textAlign: 'center',
   color: 'secondary.contratext',
-  height: 130,
+  height: 140,
   lineHeight: '60px',
 });
 
@@ -157,7 +158,7 @@ function Main() {
         return(
   <div>
     <div>
-      <Grid container spacing={5} sx={{ ml:-18 , width : '120%' }}>
+      <Grid container spacing={5} sx={{ ml:-18, mt:-6 , width : '120%' }}>
         <Grid item xs={2} >
               <SideBar elevation={5} sx={{
                   '&:hover': {
@@ -201,11 +202,13 @@ function Main() {
         <Grid item xs={10} >
             <Box
                 sx={{
-                    px: 5,
+                    px: 1.5,
                     pt: 0,
                     display: 'grid',
                     gridTemplateColumns: { md: '1fr 1fr' },
-                    gap: 78,
+                    gap: 83,
+                    mb:2,
+
                 }}
             >
             <TextField id="outlined-basic" size='small' label="식당, 음식, 카테고리, 지역 검색" variant="outlined"  sx={{ width:300}} InputProps={{ style: { height: "40px" } }}/>
@@ -228,11 +231,10 @@ function Main() {
 
             <Box
                  sx={{
-                     // display: 'inline',
-                  p: 4, px : 5,
+                  p: 3,
                   display: 'grid',
                   gridTemplateColumns: { md: '1fr 1fr' },
-                  gap: 5,
+                  gap: 6,
                 }}
             >
               {restaurants.map((restaurant,index) => (
@@ -242,40 +244,32 @@ function Main() {
                                   // backgroundColor: 'action.hover',
                                   opacity: [0.8, 0.8, 0.8],
                                   border: 1,
+
                               },
-
+                            p:1,
                           }}>
-                      <Box component="div" sx={{display: 'block', width:120 , height:120, float:"left"}}>
-                          <Image src={restaurant.img} width={120} height={120} alt="img" />
-
+                      <Box component="div" id="block-image" sx={{display: 'block', width:120 , height:120,
+                          ml:-3, mt:-3, mr:2
+                          , float:"left"}}>
+                          <Image src={restaurant.img} sx={{border:1 ,borderRadius:3}} alt="img" />
                       </Box>
-                      <Box component="div" sx={{display: 'block'}}>
+                      <Box component="div" id="block-firstLine" sx={{display: 'block'}}>
                             <Typography variant="h6" sx={{float: 'left'}} >{restaurant.name}</Typography> <Typography variant="body2" sx={{float: 'right'}} >{restaurant.category}</Typography>
                       </Box>
-                      <Box component="div" sx={{display: 'block', mt : 3.5}}>
+                      <Box component="div" id="block-secondLine" sx={{display: 'block', mt : 3.5}}>
                           <Typography variant="body2" sx={{ mt:1, float:'left'}}>{restaurant.where}</Typography> {restaurant.recommendation ? <Typography variant="body2" sx={{ float:'right'}}>추천!</Typography> : null}
                       </Box>
-                      <Box component="div" sx={{display: 'block' , mt: 8}}>
+                      <Box component="div" id="block-thirdLine" sx={{display: 'block' , mt: 8}}>
                           <Typography variant="body2" sx={{whiteSpace: 'pre-wrap'}}>{restaurant.menu}</Typography>
                       </Box>
 
-                      <Box>
+                      <Box id="block-lastLine">
 
-                          <Typography variant="body2" sx={{float:'right'}}>{restaurant.comment}</Typography>
+                          <Typography  variant="body2" sx={{float:'right'}}>{restaurant.comment}</Typography>
                           <Typography variant="body2" sx={{float:'right'}}>{restaurant.heart}</Typography>
                           <Typography variant="body2" sx={{float:'right'}}>{restaurant.star}</Typography>
 
                       </Box>
-
-                          {/*{restaurant.where}{restaurant.recommendation ? <Box component="span" sx={{}}>추천!</Box> : null}*/}
-                          {/*{restaurant.menu}*/}
-                          {/*{restaurant.star}{restaurant.heart}{restaurant.comment}*/}
-
-                      {/*<Box display="flex" justifyContent="flex-end" >{restaurant.name}</Box>*/}
-                      {/*<Box display="flex" justifyContent="flex-end" >{restaurant.name}</Box>*/}
-                      {/*<Box display="flex" justifyContent="flex-end" >{restaurant.name}</Box>*/}
-                      {/*<Box display="flex" justifyContent="flex-end" >{restaurant.name}</Box>*/}
-                      {/*<Typography variant="body1" >{restaurant.category}</Typography>*/}
 
 
                   </Item>
