@@ -13,7 +13,6 @@ import {
 } from "@mui/material";
 
 import SvgIcon from "@mui/material/SvgIcon";
-import { SvgIconComponent } from "@mui/icons-material";
 
 import {useState} from "react";
 import img1 from './img/main_img_1.jpg';
@@ -30,11 +29,16 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 
 import { Image } from 'mui-image'
-const SideBar = styled(Paper)({
-    height: 785,
-    width: 200,
+
+const SideBar = styled(Paper)(
+    {
+    // height: 785,
+    height : "99%",
+    minWidth: 130,
+    // maxWidth: 200,
     border: 1,
     pb: 30,
+
 });
 const Item = styled(Paper)(
 
@@ -43,7 +47,7 @@ const Item = styled(Paper)(
         color: 'secondary.contratext',
         height: 140,
         lineHeight: '60px',
-
+        minWidth: 300,
     });
 
 
@@ -187,11 +191,15 @@ function Main() {
         return(
   <div>
     <div>
-      <Grid container spacing={5} sx={{ ml:-18, mt:-6 , width : '120%' }}>
-        <Grid item xs={2} >
+      <Grid container columnSpacing={0} columns={{ xs: 12, sm: 10, md: 12 }} >
+
+
+          {/*Side bar*/}
+
+
+          <Grid item xs={3} sm={2} md={2} >
               <SideBar elevation={5} sx={{
                   '&:hover': {
-                      // backgroundColor: 'action.hover',
                       opacity: [0.8, 0.8, 0.8],
                       border:1,
                   },
@@ -228,42 +236,56 @@ function Main() {
                   </Box>
               </SideBar>
         </Grid>
-        <Grid item xs={10} >
+
+        {/* center */}
+
+        <Grid item xs={9} sm={8} md={10}>
+
+            {/* Search */}
+
             <Box
                 sx={{
-                    px: 1.5,
+                    px: 7,
+                    mr: 3,
                     pt: 0,
                     display: 'grid',
-                    gridTemplateColumns: { md: '1fr 1fr' },
-                    gap: 83,
+                    gridTemplateColumns: { xs: '1fr 1fr' , sm: '1fr 1fr' , md: '1fr 1fr' },
+                    gap:0,
                     mb:2,
 
                 }}
             >
-            <TextField id="outlined-basic" size='small' label="식당, 음식, 카테고리, 지역 검색" variant="outlined"  sx={{ width:300}} InputProps={{ style: { height: "40px" } }}/>
-            <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label" > Sort</InputLabel>
+            <TextField id="outlined-basic" size='small' label="식당, 음식, 카테고리, 지역 검색" variant="outlined"  sx={{ maxWidth:300 }} InputProps={{ style: { height: "40px" } }}/>
+
+
+                {/* Sort */}
+            <FormControl fullWidth >
+
+                <InputLabel id="demo-simple-select-label" sx={{ left: "80%" }}> Sort</InputLabel>
                 <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                     value={sort}
                     label="Sort"
                     onChange={handleChange}
-                    sx={{width:110, height:40}}
+                    sx={{maxWidth:110, height:40  ,left: "80%"}}
                 >
                     <MenuItem value={1}>평점 순</MenuItem>
                     <MenuItem value={2}>좋아요 순</MenuItem>
                     <MenuItem value={3}>댓글 순</MenuItem>
                 </Select>
+
             </FormControl>
             </Box>
 
+            {/* Restaurant */}
+
             <Box
                  sx={{
-                  p: 3,
+                  py: 3,px:7,
                   display: 'grid',
                   gridTemplateColumns: { md: '1fr 1fr' },
-                  gap: 6,
+                  gap: 10,
                 }}
             >
               {restaurants.map((restaurant,index) => (
