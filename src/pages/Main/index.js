@@ -33,11 +33,10 @@ import { Image } from 'mui-image'
 const SideBar = styled(Paper)(
     {
     // height: 785,
-    height : "99%",
-    minWidth: 130,
-    // maxWidth: 200,
+    height : "100%",
+    minWidth: 150,
+    maxWidth: 200,
     border: 1,
-    pb: 30,
 
 });
 const Item = styled(Paper)(
@@ -55,22 +54,22 @@ const Item = styled(Paper)(
 
 function Star(props) {
     return (
-        <SvgIcon sx={{fontSize:15 }} component={StarIcon} inheritViewBox />
+        <SvgIcon sx={{fontSize:15 ,color:props.color}} component={StarIcon} inheritViewBox />
     );
 }
 function Heart(props) {
     return (
-        <SvgIcon sx={{fontSize:15, ml:1 }} component={FavoriteIcon} inheritViewBox />
+        <SvgIcon sx={{fontSize:15, ml:1 , color:props.color }} component={FavoriteIcon} inheritViewBox />
     );
 }
 function Comment(props) {
     return (
-        <SvgIcon sx={{fontSize:15, ml:1  }} component={ChatBubbleIcon} inheritViewBox />
+        <SvgIcon sx={{fontSize:15, ml:1  ,color:props.color}} component={ChatBubbleIcon} inheritViewBox />
     );
 }
 
 function Main() {
-
+    const con = 'black';
 
   const [sort, setSort] = useState(0);
   const [restaurants ] = useState([
@@ -190,19 +189,22 @@ function Main() {
   };
         return(
   <div>
-    <div>
-      <Grid container columnSpacing={0} columns={{ xs: 12, sm: 10, md: 12 }} >
+    <div >
+      <Grid container columnSpacing={5} columns={{ xs: 12, sm: 10, md: 12 }} sx={{ width:"120%" ,ml:"-12%" }} >
 
 
           {/*Side bar*/}
-
 
           <Grid item xs={3} sm={2} md={2} >
               <SideBar elevation={5} sx={{
                   '&:hover': {
                       opacity: [0.8, 0.8, 0.8],
                       border:1,
+                      borderColor: 'error.main'
                   },
+                  // float:"left",
+                    ml:2
+
               }}>
                   <Box id={"category"} sx={{p:2, pb: 1.5 , fontWeight: 'bold' ,}}>
                       <Typography variant="body1">카테고리</Typography>
@@ -211,6 +213,7 @@ function Main() {
                               <Typography variant="body2" key={index} sx={{
                                   p:0.5,
                                   "&:hover": {
+                                      color:"error.main",
                                       textDecoration: "underline",
                                   },
                               }}>{category}</Typography>
@@ -224,6 +227,7 @@ function Main() {
                               <Box sx={{
                                   p:0.7,
                                   "&:hover": {
+                                      color:"error.main",
                                       textDecoration: "underline",
                                   },
                               }} key={index}>
@@ -255,20 +259,48 @@ function Main() {
 
                 }}
             >
-            <TextField id="outlined-basic" size='small' label="식당, 음식, 카테고리, 지역 검색" variant="outlined"  sx={{ maxWidth:300 }} InputProps={{ style: { height: "40px" } }}/>
+            <TextField id="outlined-basic" size='small' label="식당, 음식, 카테고리, 지역 검색" variant="outlined"  sx={{
+                maxWidth:230,
+                "& .MuiOutlinedInput-root" :{
+                    "& input": {
+                        textAlign: "center"
+                    },
+                    '&:hover fieldset ': {
+                        borderColor: 'red',
+                    },
+            },
+            '&:hover #outlined-basic-label':{
+                    color:'red'
+                }
+            ,
+
+
+            }} InputProps={{ style: { height: "40px" }}}/>
 
 
                 {/* Sort */}
             <FormControl fullWidth >
 
-                <InputLabel id="demo-simple-select-label" sx={{ left: "80%" }}> Sort</InputLabel>
+                <InputLabel id="demo-simple-select-label" sx={{ left: "83%" }}> Sort</InputLabel>
                 <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                     value={sort}
                     label="Sort"
                     onChange={handleChange}
-                    sx={{maxWidth:110, height:40  ,left: "80%"}}
+                    sx={{maxWidth:110, height:40  ,left: "83%" , mr:6
+                        ,
+                        "&:hover .MuiOutlinedInput-notchedOutline": {
+                            borderColor: "red",
+                            color:"red",
+
+                        },
+
+
+
+
+
+                }}
                 >
                     <MenuItem value={1}>평점 순</MenuItem>
                     <MenuItem value={2}>좋아요 순</MenuItem>
@@ -282,7 +314,7 @@ function Main() {
 
             <Box
                  sx={{
-                  py: 3,px:7,
+                  py: 3, px:7,
                   display: 'grid',
                   gridTemplateColumns: { md: '1fr 1fr' },
                   gap: 10,
@@ -295,23 +327,24 @@ function Main() {
                                   // backgroundColor: 'action.hover',
                                   opacity: [0.8, 0.8, 0.8],
                                   border: 1,
+                                  borderColor: "red",
+
                               },
                             p:1,
                           }}>
                       <Box component="div" id="block-image" sx={{display: 'block', width:120 , height:120,
                           ml:-3, mt:-3, mr:2
                           , float:"left"}}>
-                          <Image src={restaurant.img} sx={{border:1 ,borderRadius:3,borderColor:'text.secondary',
+                          <Image src={restaurant.img} sx={{border:0 ,borderRadius:3,borderColor:'text.secondary',
                               '&:hover': {
                                   // backgroundColor: 'action.hover',
                                   borderColor: 'default',
                                   opacity: [0.8, 0.8, 0.8],
-                                  border: 1,
 
                               },}} alt="img" />
                       </Box>
                       <Box component="div" id="block-firstLine" sx={{display: 'block'}}>
-                            <Typography variant="h6" sx={{float: 'left'}} >{restaurant.name}</Typography> <Typography variant="body2" sx={{float: 'right', fontWeight: 'bold'}} >{restaurant.category}</Typography>
+                            <Typography variant="body1" sx={{float: 'left' , fontWeight:'bold'}} >{restaurant.name}</Typography> <Typography variant="body2" sx={{float: 'right', fontWeight: 'bold'}} >{restaurant.category}</Typography>
                       </Box>
                       <Box component="div" id="block-secondLine" sx={{display: 'block', mt : 3.5}}>
                           <Typography variant="body2" sx={{ mt:1, float:'left' , fontWeight:'bold'}}>{restaurant.where}</Typography> {restaurant.recommendation ? <Typography variant="body2" sx={{ float:'right', color:"error.main", fontWeight:'bold'}}>추천!</Typography> : null}
@@ -322,9 +355,9 @@ function Main() {
 
                       <Box id="block-lastLine">
 
-                          <Typography  variant="body2" sx={{float:'right'}}><Comment /> {restaurant.comment}</Typography>
-                          <Typography variant="body2" sx={{float:'right'}}><Heart /> {restaurant.heart}</Typography>
-                          <Typography variant="body2" sx={{float:'right'}}><Star /> {restaurant.star}</Typography>
+                          <Typography  variant="body2" sx={{float:'right'}}><Comment color={"gray"}/> {restaurant.comment}</Typography>
+                          <Typography variant="body2" sx={{float:'right'}}><Heart color={"error.main"}/> {restaurant.heart}</Typography>
+                          <Typography variant="body2" sx={{float:'right'}}><Star color={"orange"}/> {restaurant.star}</Typography>
 
                       </Box>
 
