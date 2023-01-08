@@ -3,15 +3,13 @@ import {Box, Paper, styled, Typography} from "@mui/material";
 const StyledFooterTypo = styled(Typography)({
   fontWeight :"bold",
   color :"text.primary",
-
-
     }
 );
 function Footer() {
   return <>
 
       <Box sx={{
-        px : 3, py : 1, mx : 3, mt: 15, color: "text.secondary", borderTop: 2, borderColor: "text.secondary"
+        px : 3, py : 1, mx : 3, mt: 15, pb:3, color: "text.secondary", borderTop: 2, borderColor: "text.secondary"
         }}>
 
         <StyledFooterTypo variant="caption" sx={{ display:"flex",

@@ -32,8 +32,7 @@ import { Image } from 'mui-image'
 
 const SideBar = styled(Paper)(
     {
-    // height: 785,
-    height : "100%",
+    height: "97%",
     minWidth: 150,
     maxWidth: 200,
     border: 1,
@@ -195,15 +194,17 @@ function Main() {
 
           {/*Side bar*/}
 
-          <Grid item xs={3} sm={2} md={2} >
+          <Grid item xs={0} sm={2} md={2} >
               <SideBar elevation={10} sx={{
+                  ml:{md:2 , sm: 4},
+                  display : {xs: 'none' , sm: 'block'},
                   '&:hover': {
                       opacity: [0.8, 0.8, 0.8],
                       border:1,
                       borderColor: 'error.main'
                   },
-                  // float:"left",
-                    ml:2
+
+
 
               }}>
                   <Box id={"category"} sx={{p:2, pb: 1.5 , fontWeight: 'bold' ,}}>
@@ -243,24 +244,24 @@ function Main() {
 
         {/* center */}
 
-        <Grid item xs={9} sm={8} md={10}>
+        <Grid item xs={12} sm={8} md={10}>
 
             {/* Search */}
 
             <Box
                 sx={{
-                    px: 7,
+                    px: 5,
                     mr: 3,
                     pt: 0,
                     display: 'grid',
-                    gridTemplateColumns: { xs: '1fr 1fr' , sm: '1fr 1fr' , md: '1fr 1fr' },
+                    gridTemplateColumns: { xs: '1fr' , sm: '1fr 1fr' , md: '1fr 1fr' },
                     gap:0,
                     mb:2,
 
                 }}
             >
             <TextField id="outlined-basic" size='small' label="식당, 음식, 카테고리, 지역 검색" variant="outlined"  sx={{
-                maxWidth:230,
+                width : {xs:420 , sm:230 , md:230 },
                 "& .MuiOutlinedInput-root" :{
                     "& input": {
                         textAlign: "center"
@@ -279,16 +280,16 @@ function Main() {
 
 
                 {/* Sort */}
-            <FormControl fullWidth >
+            <FormControl fullWidth sx={{mt:{xs : 2,sm:0 }}}>
 
-                <InputLabel id="demo-simple-select-label" sx={{ left: "83%" }}> Sort</InputLabel>
+                <InputLabel id="demo-simple-select-label" sx={{  left: {xs : "0%" , sm : "67%" , md: "80%"}}}> Sort</InputLabel>
                 <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                     value={sort}
                     label="Sort"
                     onChange={handleChange}
-                    sx={{maxWidth:110, height:40  ,left: "83%" , mr:6
+                    sx={{maxWidth:110, height:40  ,left: {xs : "0%" , sm : "67%" , md: "80%"}
                         ,
                         "&:hover .MuiOutlinedInput-notchedOutline": {
                             borderColor: "red",
