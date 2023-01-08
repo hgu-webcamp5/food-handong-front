@@ -196,7 +196,7 @@ function Main() {
           {/*Side bar*/}
 
           <Grid item xs={3} sm={2} md={2} >
-              <SideBar elevation={5} sx={{
+              <SideBar elevation={10} sx={{
                   '&:hover': {
                       opacity: [0.8, 0.8, 0.8],
                       border:1,
