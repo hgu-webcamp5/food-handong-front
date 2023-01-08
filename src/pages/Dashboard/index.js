@@ -12,20 +12,15 @@ import TextField from '@mui/material/TextField';
 import imgA from './profile.png';
 import Restaurant from './restaurant.jpg'
 import Link from '@mui/material/Link';
-import { spacing } from '@mui/system';
-import { Scale } from '@mui/icons-material';
-import { Label } from '@mui/icons-material';
 
-// import StarIcon from '@mui/icons-material/Star';
-// import FavoriteIcon from '@mui/icons-material/Favorite';
-// import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
+import StarIcon from '@mui/icons-material/Star';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Divider from '@mui/material/Divider';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import Avatar from '@mui/material/Avatar';
+
 
 
 const bull = (
@@ -145,9 +140,11 @@ function Dashboard() {
                   <Typography variant="body2" sx={{ mb: 1.5, marginTop: 1 }} color="text.secondary">
                     {restaurant[2]}
                   </Typography>
-                  {/* <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="star" class="svg-inline--fa fa-star Restaurant_starIcon__NVFG4" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
-                  <path fill="currentColor" d="M381.2 150.3L524.9 171.5C536.8 173.2 546.8 181.6 550.6 193.1C554.4 204.7 551.3 217.3 542.7 225.9L438.5 328.1L463.1 474.7C465.1 486.7 460.2 498.9 450.2 506C440.3 513.1 427.2 514 416.5 508.3L288.1 439.8L159.8 508.3C149 514 135.9 513.1 126 506C116.1 498.9 111.1 486.7 113.2 474.7L137.8 328.1L33.58 225.9C24.97 217.3 21.91 204.7 25.69 193.1C29.46 181.6 39.43 173.2 51.42 171.5L195 150.3L259.4 17.97C264.7 6.954 275.9-.0391 288.1-.0391C300.4-.0391 311.6 6.954 316.9 17.97L381.2 150.3z"></path>
-                </svg> */}
+                  <Typography variant="body2" sx={{ mb: 1.5, marginTop: 1 }} color="text.secondary">
+                    <StarIcon sx={{color: '#ffcc33', fontSize: 20, marginBottom: -0.5}}/> {score[0]}
+                    <FavoriteIcon sx={{color: '#ff6666', fontSize: 19, marginLeft: 1, marginBottom: -0.5}}/> {score[1]} 
+                    <ChatBubbleIcon sx={{color: "#33cccc", fontSize: 18, marginLeft: 1, marginBottom: -0.5}}/> {score[2]}
+                  </Typography>
                 </CardContent>
               </Grid>
               <Grid item xs={2}>
@@ -191,9 +188,11 @@ function Dashboard() {
                   <Typography variant="body2" sx={{ mb: 1.5, marginTop: 1, fontSize: 13 }} color="text.secondary">
                     {restaurant[2]}
                   </Typography>
-                  {/* <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="star" class="svg-inline--fa fa-star Restaurant_starIcon__NVFG4" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
-                  <path fill="currentColor" d="M381.2 150.3L524.9 171.5C536.8 173.2 546.8 181.6 550.6 193.1C554.4 204.7 551.3 217.3 542.7 225.9L438.5 328.1L463.1 474.7C465.1 486.7 460.2 498.9 450.2 506C440.3 513.1 427.2 514 416.5 508.3L288.1 439.8L159.8 508.3C149 514 135.9 513.1 126 506C116.1 498.9 111.1 486.7 113.2 474.7L137.8 328.1L33.58 225.9C24.97 217.3 21.91 204.7 25.69 193.1C29.46 181.6 39.43 173.2 51.42 171.5L195 150.3L259.4 17.97C264.7 6.954 275.9-.0391 288.1-.0391C300.4-.0391 311.6 6.954 316.9 17.97L381.2 150.3z"></path>
-                </svg> */}
+                  <Typography variant="body2" sx={{ mb: 1.5, marginTop: 1, fontSize: 12}} color="text.secondary">
+                    <StarIcon sx={{color: '#ffcc33', fontSize: 18, marginBottom: -0.5}}/> {score[0]}
+                    <FavoriteIcon sx={{color: '#ff6666', fontSize: 17, marginLeft: 1, marginBottom: -0.5}}/> {score[1]} 
+                    <ChatBubbleIcon sx={{color: "#33cccc", fontSize: 16, marginLeft: 1, marginBottom: -0.5}}/> {score[2]}
+                  </Typography>
                 </CardContent>
               </Grid>
               <Grid item xs={2}>
@@ -238,7 +237,11 @@ function Dashboard() {
                       </Link>
                     </Typography>
                     <Typography sx={{ fontSize: 14 }} gutterBottom>
-                      별 5개
+                      <StarIcon sx={{color: '#ffcc33', fontSize: 20, marginBottom: -0.5}}/>
+                      <StarIcon sx={{color: '#ffcc33', fontSize: 20, marginBottom: -0.5}}/>
+                      <StarIcon sx={{color: '#ffcc33', fontSize: 20, marginBottom: -0.5}}/>
+                      <StarIcon sx={{color: '#ffcc33', fontSize: 20, marginBottom: -0.5}}/>
+                      <StarIcon sx={{color: '#ffcc33', fontSize: 20, marginBottom: -0.5}}/>
                     </Typography>
                     <Typography sx={{ fontSize: 14 }} gutterBottom>
                       {review[1]}
@@ -284,7 +287,11 @@ function Dashboard() {
                       </Link>
                     </Typography>
                     <Typography sx={{ fontSize: 14 }} gutterBottom>
-                      별 5개
+                      <StarIcon sx={{color: '#ffcc33', fontSize: 17, marginBottom: -0.5}}/>
+                      <StarIcon sx={{color: '#ffcc33', fontSize: 17, marginBottom: -0.5}}/>
+                      <StarIcon sx={{color: '#ffcc33', fontSize: 17, marginBottom: -0.5}}/>
+                      <StarIcon sx={{color: '#ffcc33', fontSize: 17, marginBottom: -0.5}}/>
+                      <StarIcon sx={{color: '#ffcc33', fontSize: 17, marginBottom: -0.5}}/>
                     </Typography>
                     <Typography sx={{ fontSize: 14 }} gutterBottom>
                       {review[1]}
@@ -309,7 +316,8 @@ function Dashboard() {
       {!more && !rev && <Grid item xs={4} sx={{ marginLeft: -8, marginRight: -20 }}>
         <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper',textAlign: 'center', fontWeight: 'bold' }}>
           내가 좋아요한 식당들
-          <ListItem alignItems="flex-start">
+          <Link href="#" underline="none">
+            <ListItem alignItems="flex-start">     
               <Card sx={{ width: 550, height: 100 }} onMouseEnter={() => { setSize(false) }} onMouseLeave={() => { setSize(true) }}>
                 <Grid container>
                   <Grid item xs={5}>
@@ -335,13 +343,20 @@ function Dashboard() {
                       <Typography sx={{ fontSize: 14 }} gutterBottom>
                         {restaurant[1]}
                       </Typography>
+                      <Typography variant="body2" sx={{ mb: 1.5, marginTop: -0.5, fontSize: 12}} color="text.secondary">
+                        <StarIcon sx={{color: '#ffcc33', fontSize: 18, marginBottom: -0.5}}/> {score[0]}
+                        <FavoriteIcon sx={{color: '#ff6666', fontSize: 17, marginLeft: 1, marginBottom: -0.5}}/> {score[1]} 
+                        <ChatBubbleIcon sx={{color: "#33cccc", fontSize: 16, marginLeft: 1, marginBottom: -0.5}}/> {score[2]}
+                      </Typography>
                     </CardContent>
                   </Grid>
                 </Grid>
               </Card>
-          </ListItem>
+            </ListItem>
+          </Link>
           <Divider variant="inset" component="li" />
-          <ListItem alignItems="flex-start">
+          <Link href="#" underline="none">
+            <ListItem alignItems="flex-start">     
               <Card sx={{ width: 550, height: 100 }} onMouseEnter={() => { setSize(false) }} onMouseLeave={() => { setSize(true) }}>
                 <Grid container>
                   <Grid item xs={5}>
@@ -367,13 +382,20 @@ function Dashboard() {
                       <Typography sx={{ fontSize: 14 }} gutterBottom>
                         {restaurant[1]}
                       </Typography>
+                      <Typography variant="body2" sx={{ mb: 1.5, marginTop: -0.5, fontSize: 12}} color="text.secondary">
+                        <StarIcon sx={{color: '#ffcc33', fontSize: 18, marginBottom: -0.5}}/> {score[0]}
+                        <FavoriteIcon sx={{color: '#ff6666', fontSize: 17, marginLeft: 1, marginBottom: -0.5}}/> {score[1]} 
+                        <ChatBubbleIcon sx={{color: "#33cccc", fontSize: 16, marginLeft: 1, marginBottom: -0.5}}/> {score[2]}
+                      </Typography>
                     </CardContent>
                   </Grid>
                 </Grid>
               </Card>
-          </ListItem>
+            </ListItem>
+          </Link>
           <Divider variant="inset" component="li" />
-          <ListItem alignItems="flex-start">
+          <Link href="#" underline="none">
+            <ListItem alignItems="flex-start">     
               <Card sx={{ width: 550, height: 100 }} onMouseEnter={() => { setSize(false) }} onMouseLeave={() => { setSize(true) }}>
                 <Grid container>
                   <Grid item xs={5}>
@@ -399,17 +421,24 @@ function Dashboard() {
                       <Typography sx={{ fontSize: 14 }} gutterBottom>
                         {restaurant[1]}
                       </Typography>
+                      <Typography variant="body2" sx={{ mb: 1.5, marginTop: -0.5, fontSize: 12}} color="text.secondary">
+                        <StarIcon sx={{color: '#ffcc33', fontSize: 18, marginBottom: -0.5}}/> {score[0]}
+                        <FavoriteIcon sx={{color: '#ff6666', fontSize: 17, marginLeft: 1, marginBottom: -0.5}}/> {score[1]} 
+                        <ChatBubbleIcon sx={{color: "#33cccc", fontSize: 16, marginLeft: 1, marginBottom: -0.5}}/> {score[2]}
+                      </Typography>
                     </CardContent>
                   </Grid>
                 </Grid>
               </Card>
-          </ListItem>
+            </ListItem>
+          </Link>
         </List>
       </Grid>}
       {!more && rev && <Grid item xs={4} sx={{ marginLeft: -8, marginRight: -20 }}>
         <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper',textAlign: 'center', fontWeight: 'bold' }}>
           내가 쓴 리뷰
-          `<ListItem alignItems="flex-start">
+          `<Link href="#" underline="none">
+            <ListItem alignItems="flex-start">
               <Card sx={{ width: 550, height: 100 }} onMouseEnter={() => { setSize(false) }} onMouseLeave={() => { setSize(true) }}>
                 <Grid container>
                   <Grid item xs={5}>
@@ -433,7 +462,11 @@ function Dashboard() {
                         {review[0]}
                       </Typography>
                       <Typography sx={{ fontSize: 14 }} gutterBottom>
-                        별 5개
+                        <StarIcon sx={{color: '#ffcc33', fontSize: 17, marginBottom: -0.5}}/>
+                        <StarIcon sx={{color: '#ffcc33', fontSize: 17, marginBottom: -0.5}}/>
+                        <StarIcon sx={{color: '#ffcc33', fontSize: 17, marginBottom: -0.5}}/>
+                        <StarIcon sx={{color: '#ffcc33', fontSize: 17, marginBottom: -0.5}}/>
+                        <StarIcon sx={{color: '#ffcc33', fontSize: 17, marginBottom: -0.5}}/>
                       </Typography>
                       <Typography sx={{ fontSize: 14 }} gutterBottom>
                         {review[1]}
@@ -442,9 +475,11 @@ function Dashboard() {
                   </Grid>
                 </Grid>
               </Card>
-          </ListItem>
+            </ListItem>
+          </Link>
           <Divider variant="inset" component="li" />
-          <ListItem alignItems="flex-start">
+          <Link href="#" underline="none">
+            <ListItem alignItems="flex-start">
               <Card sx={{ width: 550, height: 100 }} onMouseEnter={() => { setSize(false) }} onMouseLeave={() => { setSize(true) }}>
                 <Grid container>
                   <Grid item xs={5}>
@@ -468,7 +503,11 @@ function Dashboard() {
                         {review[0]}
                       </Typography>
                       <Typography sx={{ fontSize: 14 }} gutterBottom>
-                        별 5개
+                        <StarIcon sx={{color: '#ffcc33', fontSize: 17, marginBottom: -0.5}}/>
+                        <StarIcon sx={{color: '#ffcc33', fontSize: 17, marginBottom: -0.5}}/>
+                        <StarIcon sx={{color: '#ffcc33', fontSize: 17, marginBottom: -0.5}}/>
+                        <StarIcon sx={{color: '#ffcc33', fontSize: 17, marginBottom: -0.5}}/>
+                        <StarIcon sx={{color: '#ffcc33', fontSize: 17, marginBottom: -0.5}}/>
                       </Typography>
                       <Typography sx={{ fontSize: 14 }} gutterBottom>
                         {review[1]}
@@ -477,9 +516,11 @@ function Dashboard() {
                   </Grid>
                 </Grid>
               </Card>
-          </ListItem>
+            </ListItem>
+          </Link>
           <Divider variant="inset" component="li" />
-          <ListItem alignItems="flex-start">
+          <Link href="#" underline="none">
+            <ListItem alignItems="flex-start">
               <Card sx={{ width: 550, height: 100 }} onMouseEnter={() => { setSize(false) }} onMouseLeave={() => { setSize(true) }}>
                 <Grid container>
                   <Grid item xs={5}>
@@ -503,7 +544,11 @@ function Dashboard() {
                         {review[0]}
                       </Typography>
                       <Typography sx={{ fontSize: 14 }} gutterBottom>
-                        별 5개
+                        <StarIcon sx={{color: '#ffcc33', fontSize: 17, marginBottom: -0.5}}/>
+                        <StarIcon sx={{color: '#ffcc33', fontSize: 17, marginBottom: -0.5}}/>
+                        <StarIcon sx={{color: '#ffcc33', fontSize: 17, marginBottom: -0.5}}/>
+                        <StarIcon sx={{color: '#ffcc33', fontSize: 17, marginBottom: -0.5}}/>
+                        <StarIcon sx={{color: '#ffcc33', fontSize: 17, marginBottom: -0.5}}/>
                       </Typography>
                       <Typography sx={{ fontSize: 14 }} gutterBottom>
                         {review[1]}
@@ -512,7 +557,8 @@ function Dashboard() {
                   </Grid>
                 </Grid>
               </Card>
-          </ListItem>
+            </ListItem>
+          </Link>
         </List>
       </Grid>}
     </Grid>
