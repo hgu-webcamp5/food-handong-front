@@ -12,6 +12,7 @@ import Restaurant from './pages/Restaurant';
 
 export const Container = styled(MuiContainer)(({ theme }) => ({
   paddingTop: theme.mixins.toolbar.minHeight * 2,
+  minHeight: `calc(100vh - 154px)`,
 }));
 
 function Router() {
