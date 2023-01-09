@@ -1,6 +1,7 @@
 import { Container as MuiContainer } from '@mui/material';
 import { styled } from '@mui/system';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Footer from './components/Footer';
 import Header from './components/Header';
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
@@ -27,6 +28,7 @@ function Router() {
           <Route path="*" element={<Page404 />} />
         </Routes>
       </Container>
+      <Footer />
     </BrowserRouter>
   );
 }
