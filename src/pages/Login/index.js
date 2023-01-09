@@ -1,7 +1,4 @@
-import * as React from 'react';
-
 import { Box, Button, Paper, TextField, Typography } from '@mui/material';
-
 import styles from './Login.module.css';
 
 function Login() {
