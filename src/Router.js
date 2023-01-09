@@ -1,6 +1,7 @@
 import { Container as MuiContainer } from '@mui/material';
 import { styled } from '@mui/system';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Footer from './components/Footer';
 import Header from './components/Header';
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
@@ -11,6 +12,7 @@ import Restaurant from './pages/Restaurant';
 
 export const Container = styled(MuiContainer)(({ theme }) => ({
   paddingTop: theme.mixins.toolbar.minHeight * 2,
+  minHeight: `calc(100vh - 154px)`,
 }));
 
 function Router() {
@@ -27,6 +29,7 @@ function Router() {
           <Route path="*" element={<Page404 />} />
         </Routes>
       </Container>
+      <Footer />
     </BrowserRouter>
   );
 }
