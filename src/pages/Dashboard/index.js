@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -12,25 +11,15 @@ import TextField from '@mui/material/TextField';
 import imgA from './profile.png';
 import Restaurant from './restaurant.jpg'
 import Link from '@mui/material/Link';
-
 import StarIcon from '@mui/icons-material/Star';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
-
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Divider from '@mui/material/Divider';
+import Box from '@mui/material/Box';
+import { Scale } from '@mui/icons-material';
 
-
-
-const bull = (
-  <Box
-    component="span"
-    sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}
-  >
-    •
-  </Box>
-);
 
 function Dashboard() {
   const email = "21900064@handong.ac.kr";
@@ -55,6 +44,7 @@ function Dashboard() {
   const [rev, showReview] = useState(true);
   return (
     <Grid container spacing={10}>
+      {/* 프로필 */}
       <Grid item xs={4}>
         <>
           <img
@@ -66,13 +56,16 @@ function Dashboard() {
               borderRadius: 100
             }}
           ></img>
-          <Grid item xs={4} sx={{
+          <Box sx={{
             marginTop: 3,
+            width: 250,
             fontWeight: "bold",
-            minwidth: 500
+            display: "flex",
+            justifyContent: "center",
+            textAlign: "center",
           }}>
-            {show && <label>{value}</label>}
-          </Grid>
+            {show && value}
+          </Box>
           {show && <Button variant="outlined" sx={{ width: 250, marginTop: 1 }} onClick={() => toggleShow(!show)}>
             Edit profile
           </Button>}
@@ -111,8 +104,8 @@ function Dashboard() {
         </Typography>
         <br />
         <Link href="#" underline="none">
-          {/* 더보기 X */}
-          {more && <Card sx={{ width: 550 }} onMouseEnter={() => { setSize(false) }} onMouseLeave={() => { setSize(true) }}>
+          {/* 더보기 누르기전 큰 버전 */}
+          {more && <Card sx={{ width: 550, ":hover": {transform: "scale(1.02)"} }} onMouseEnter={() => { setSize(false) }} onMouseLeave={() => { setSize(true) }}>
             <Grid container>
               <Grid item xs={5}>
                 <CardContent sx={{ paddingRight: 0 }}>
@@ -159,8 +152,8 @@ function Dashboard() {
               </Grid>
             </Grid>
           </Card>}
-          {/* 더보기 O */}
-          {!more && <Card sx={{ width: 450 }} onMouseEnter={() => { setSize(false) }} onMouseLeave={() => { setSize(true) }}>
+          {/* 더보기 누른 후 작은버전 */}
+          {!more && <Card sx={{ width: 450, ":hover": {transform: "scale(1.02)"} }} onMouseEnter={() => { setSize(false) }} onMouseLeave={() => { setSize(true) }}>
             <Grid container>
               <Grid item xs={5}>
                 <CardContent sx={{ paddingRight: 0 }}>
@@ -213,7 +206,7 @@ function Dashboard() {
           최근 쓴 리뷰
         </Typography>
         <br />
-        {/* 더보기 X */}
+        {/* 더보기 누르기전 큰버전 */}
         {more && <Grid container>
           <Grid item xs={3.7}>
             <img
@@ -263,7 +256,7 @@ function Dashboard() {
             </Card>
           </Grid>
         </Grid>}
-        {/* 더보기 O */}
+        {/* 더보기 누른 후 작은버전 */}
         {!more && <Grid container>
           <Grid item xs={3.7}>
             <img
@@ -313,11 +306,12 @@ function Dashboard() {
           </Grid>
         </Grid>}
       </Grid>
+      {/* 내가 좋아요한 식당 List */}
       {!more && !rev && <Grid item xs={4} sx={{ marginLeft: -8, marginRight: -20 }}>
         <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper',textAlign: 'center', fontWeight: 'bold' }}>
           내가 좋아요한 식당들
           <Link href="#" underline="none">
-            <ListItem alignItems="flex-start">     
+            <ListItem alignItems="flex-start" sx={{":hover": {transform: "scale(1.02)"}}}>     
               <Card sx={{ width: 550, height: 100 }} onMouseEnter={() => { setSize(false) }} onMouseLeave={() => { setSize(true) }}>
                 <Grid container>
                   <Grid item xs={5}>
@@ -356,7 +350,7 @@ function Dashboard() {
           </Link>
           <Divider variant="inset" component="li" />
           <Link href="#" underline="none">
-            <ListItem alignItems="flex-start">     
+            <ListItem alignItems="flex-start" sx={{":hover": {transform: "scale(1.02)"}}}>     
               <Card sx={{ width: 550, height: 100 }} onMouseEnter={() => { setSize(false) }} onMouseLeave={() => { setSize(true) }}>
                 <Grid container>
                   <Grid item xs={5}>
@@ -395,7 +389,7 @@ function Dashboard() {
           </Link>
           <Divider variant="inset" component="li" />
           <Link href="#" underline="none">
-            <ListItem alignItems="flex-start">     
+            <ListItem alignItems="flex-start" sx={{":hover": {transform: "scale(1.02)"}}}>     
               <Card sx={{ width: 550, height: 100 }} onMouseEnter={() => { setSize(false) }} onMouseLeave={() => { setSize(true) }}>
                 <Grid container>
                   <Grid item xs={5}>
@@ -434,11 +428,12 @@ function Dashboard() {
           </Link>
         </List>
       </Grid>}
+      {/* 내가 쓴 리뷰 List*/}
       {!more && rev && <Grid item xs={4} sx={{ marginLeft: -8, marginRight: -20 }}>
         <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper',textAlign: 'center', fontWeight: 'bold' }}>
           내가 쓴 리뷰
           `<Link href="#" underline="none">
-            <ListItem alignItems="flex-start">
+            <ListItem alignItems="flex-start" sx={{":hover": {transform: "scale(1.02)"}}}>
               <Card sx={{ width: 550, height: 100 }} onMouseEnter={() => { setSize(false) }} onMouseLeave={() => { setSize(true) }}>
                 <Grid container>
                   <Grid item xs={5}>
@@ -479,7 +474,7 @@ function Dashboard() {
           </Link>
           <Divider variant="inset" component="li" />
           <Link href="#" underline="none">
-            <ListItem alignItems="flex-start">
+            <ListItem alignItems="flex-start" sx={{":hover": {transform: "scale(1.02)"}}}>
               <Card sx={{ width: 550, height: 100 }} onMouseEnter={() => { setSize(false) }} onMouseLeave={() => { setSize(true) }}>
                 <Grid container>
                   <Grid item xs={5}>
@@ -520,7 +515,7 @@ function Dashboard() {
           </Link>
           <Divider variant="inset" component="li" />
           <Link href="#" underline="none">
-            <ListItem alignItems="flex-start">
+            <ListItem alignItems="flex-start" sx={{":hover": {transform: "scale(1.02)"}}}>
               <Card sx={{ width: 550, height: 100 }} onMouseEnter={() => { setSize(false) }} onMouseLeave={() => { setSize(true) }}>
                 <Grid container>
                   <Grid item xs={5}>
@@ -566,4 +561,3 @@ function Dashboard() {
 }
 
 export default Dashboard;
-
