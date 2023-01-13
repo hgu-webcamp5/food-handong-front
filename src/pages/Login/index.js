@@ -2,7 +2,13 @@ import * as React from 'react';
 
 import { Box, Button, Paper, TextField, Typography } from '@mui/material';
 
+import { Link } from 'react-router-dom';
+
 import styles from './Login.module.css';
+
+// import GoogleButton from './googleLogin';
+import GoogleImage from './img/1.png';
+import KakaoImage from './img/2.jpeg';
 
 function Login() {
   return (
@@ -32,6 +38,14 @@ function Login() {
             size="small"
             fullWidth
           />
+
+          {/* <img src={GoogleImage} /> */}
+          {/* <GoogleButton /> */}
+          {/* <Button>
+            <img src={KakaoImage} />
+          </Button> */}
+          {/* <a href=''>회원가입</a> */}
+          <Link to="/login/addform">회원가입</Link>
           <Box className={styles.submitBtnContainer}>
             <Button
               // onClick={saveProfile}
