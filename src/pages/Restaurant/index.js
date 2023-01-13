@@ -1,14 +1,6 @@
-import { useEffect, useState, useCallback, useRef} from 'react';
-import {
-  CardContent,
-  Button,
-  Typography,
-  IconButton,
-  Grid,
-  Divider,
-  Paper,
-} from '@mui/material';
-import { grey, red, yellow, teal} from '@mui/material/colors';
+import { useEffect, useState, useCallback, useRef } from 'react';
+import { CardContent, Button, Typography, IconButton, Grid, Divider, Paper } from '@mui/material';
+import { grey, red, yellow, teal } from '@mui/material/colors';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
@@ -19,76 +11,102 @@ import imageUrl from '../../assets/images/샤브20.jpeg';
 import menuImgUrl from '../../assets/images/샤브20메뉴.jpeg';
 import Review from './components/review';
 import AddReview from './components/addReview';
+import { getReviewById, getReviews } from './apis/review';
+import { getRestaurantById } from './apis/restaurant';
+import { useParams } from 'react-router-dom';
 
 const { kakao } = window;
 
 function RestaurantInfo() {
+  const { id } = useParams();
+  const [restaurant, setRestaurant] = useState();
+  useEffect(() => {
+    const loadData = async () => {
+      const response = await getRestaurantById(id);
+      setRestaurant(response);
+    };
+    loadData();
+  }, []);
+
   return (
     <Paper sx={{ marginLeft: -10, height: 310 }} elevation={5}>
-      <CardContent>
-        <Grid container sx={{ marginBottom: 2 }}>
-          <Grid item xs={10}>
-            <Typography style={{ fontSize: 23, fontWeight: 'bold' }}>샤브 20</Typography>
+      {restaurant && (
+        <CardContent>
+          <Grid container sx={{ marginBottom: 2 }}>
+            <Grid item xs={10}>
+              <Typography style={{ fontSize: 23, fontWeight: 'bold' }}>
+                {restaurant.name}
+              </Typography>
+            </Grid>
+            <Grid item xs={2}>
+              <div>
+                <IconButton sx={{ color: red[400] }} aria-label="add to favorites">
+                  <FavoriteBorderIcon />
+                </IconButton>
+                <IconButton
+                  sx={{ color: yellow[600] }}
+                  style={{ fontSize: '60px' }}
+                  aria-label="share"
+                >
+                  <ShareIcon />
+                </IconButton>
+              </div>
+            </Grid>
           </Grid>
-          <Grid item xs={2}>
-            <div>
-              <IconButton sx={{ color: red[400] }} aria-label="add to favorites">
-                <FavoriteBorderIcon />
-              </IconButton>
-              <IconButton
-                sx={{ color: yellow[600] }}
-                style={{ fontSize: '60px' }}
-                aria-label="share"
-              >
-                <ShareIcon />
-              </IconButton>
-            </div>
+          <Grid container>
+            <Grid item xs={4}>
+              <img
+                src={restaurant.imageUrl}
+                width="180"
+                height="200"
+                style={{ borderRadius: '5%' }}
+                alt=""
+              />
+            </Grid>
+            <Grid item xs={8}>
+              <div>
+                <IconButton
+                  sx={{
+                    color: yellow[600],
+                    paddingTop: 0,
+                    paddingLeft: 0,
+                    paddingRight: 0,
+                    size: 'small',
+                  }}
+                  aria-label="별점"
+                >
+                  <GradeIcon />
+                  <Typography sx={{ fontSize: 17, color: yellow[600] }}>4.8</Typography>
+                </IconButton>
+                <IconButton
+                  sx={{ color: red[400], paddingTop: 0, paddingRight: 0, size: 'small' }}
+                  aria-label="좋아요 수"
+                >
+                  <FavoriteIcon />
+                  <Typography sx={{ fontSize: 17, color: red[400] }}>3</Typography>
+                </IconButton>
+                <IconButton
+                  sx={{ color: teal[400], paddingTop: 0, size: 'small' }}
+                  aria-label="리뷰"
+                >
+                  <CommentIcon />
+                  <Typography sx={{ fontSize: 17, color: teal[400] }}>2</Typography>
+                </IconButton>
+              </div>
+              <Typography style={{ fontSize: 17 }}>육류</Typography>
+              <Typography style={{ fontSize: 17, paddingTop: 2 }}>{restaurant.dong}</Typography>
+              <Typography style={{ fontSize: 17, paddingTop: 2 }}>{restaurant.location}</Typography>
+              <div style={{ display: 'flex', paddingTop: 4 }}>
+                <CallIcon></CallIcon>
+                <Typography style={{ fontSize: 17 }}>{restaurant.contact}</Typography>
+              </div>
+              <Typography style={{ fontSize: 17, paddingTop: 4 }}>
+                {restaurant.openingHours}
+              </Typography>
+            </Grid>
           </Grid>
-        </Grid>
-        <Grid container>
-          <Grid item xs={4}>
-            <img src={imageUrl} width="180" height="200" style={{ borderRadius: '5%' }} alt="" />
-          </Grid>
-          <Grid item xs={8}>
-            <div>
-              <IconButton
-                sx={{
-                  color: yellow[600],
-                  paddingTop: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  size: 'small',
-                }}
-                aria-label="별점"
-              >
-                <GradeIcon />
-                <Typography sx={{ fontSize: 17, color: yellow[600] }}>4.8</Typography>
-              </IconButton>
-              <IconButton
-                sx={{ color: red[400], paddingTop: 0, paddingRight: 0, size: 'small' }}
-                aria-label="좋아요 수"
-              >
-                <FavoriteIcon />
-                <Typography sx={{ fontSize: 17, color: red[400] }}>3</Typography>
-              </IconButton>
-              <IconButton sx={{ color: teal[400], paddingTop: 0, size: 'small' }} aria-label="리뷰">
-                <CommentIcon />
-                <Typography sx={{ fontSize: 17, color: teal[400] }}>2</Typography>
-              </IconButton>
-            </div>
-            <Typography style={{ fontSize: 17 }}>육류</Typography>
-            <Typography style={{ fontSize: 17, paddingTop: 2 }}>장성동</Typography>
-            <Typography style={{ fontSize: 17, paddingTop: 2 }}>
-              경북 포항시 북구 법원로 7
-            </Typography>
-            <div style={{ display: 'flex', paddingTop: 4 }}>
-              <CallIcon></CallIcon>
-              <Typography style={{ fontSize: 17 }}>054-254-0020</Typography>
-            </div>
-            <Typography style={{ fontSize: 17, paddingTop: 4 }}>매일: 11:00 - 22:00</Typography>
-          </Grid>
-        </Grid>
-      </CardContent>
+        </CardContent>
+      )}
     </Paper>
   );
 }
@@ -174,10 +192,9 @@ function Map() {
 }
 
 function KakaoMap() {
-
   useEffect(() => {
     const lat = 36.103116;
-    const lon = 129.388368
+    const lon = 129.388368;
     const container = document.getElementById('map');
     const options = {
       center: new kakao.maps.LatLng(lat, lon),
@@ -187,7 +204,7 @@ function KakaoMap() {
 
     const marker = new kakao.maps.Marker({
       position: new kakao.maps.LatLng(lat, lon),
-      title: "한동대",
+      title: '한동대',
     });
 
     marker.setMap(map);
@@ -195,7 +212,7 @@ function KakaoMap() {
     //   navigator.geolocation.getCurrentPosition(function(position) {
     //     currLat = position.coords.latitude;
     //     currLon = position.coords.longitude;
-      
+
     //     const locPosition = new kakao.maps.LatLng(currLat, currLon);
     //     console.log("locPosition: " + locPosition);
     //     // displayMarker(locPosition, message);
@@ -205,53 +222,22 @@ function KakaoMap() {
     //     currLat = 33.450701;
     //     currLon = 126.570667;
     // }
-    
-    
   }, []);
 
   return <div id="map" style={{ backgroundColor: 'black', width: '100%', height: '400px' }}></div>;
 }
 
-
 function Restaurant() {
-  const [reviews, setReviews] = useState([
-    {
-      id: 1,
-      name: "김성경",
-      date: "오늘",
-      rate: 5,
-      comment: "너무 맛있어요!!",
-      heartNum: 3,
-      replyNum: 1,
-      reply: [{
-          name: "사장님",
-          comment: "감사합니다:)",
-      }],
-      // replyName: "사장님",
-      // replycomment: "감사합니다:)",
-    },
-    {
-      id: 2,
-      name: "김성경",
-      date: "어제",
-      rate: 1,
-      comment: "맛없어요",
-      heartNum: 0,
-      replyNum: 1,
-      reply: [{
-          name: "사장님",
-          comment: "맛이 없으셨군요ㅠ",
-      }],
-    },
-  ]);
-  
-  const nextId = useRef(reviews.length+1);
-  const onInsert  = useCallback(
+  const { id } = useParams();
+  const [reviews, setReviews] = useState([]);
+
+  const nextId = useRef(reviews.length + 1);
+  const onInsert = useCallback(
     (text, rate) => {
       const newReview = {
         id: nextId.current,
-        name: "김성경",
-        date: "오늘",
+        name: '김성경',
+        date: '오늘',
         rate: rate,
         comment: text,
         heartNum: 0,
@@ -264,6 +250,15 @@ function Restaurant() {
     [reviews],
   );
 
+  const loadData = async () => {
+    const response = await getReviewById(id);
+    setReviews(response);
+  };
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
   return (
     <div>
       <Grid container spacing={5} justifyContent="space" sx={{ marign: 0 }}>
@@ -271,14 +266,14 @@ function Restaurant() {
           <RestaurantInfo />
         </Grid>
         <Grid item lg={6} md={6} sm={12} xs={12}>
-          <AddReview onInsert={onInsert}/>
+          <AddReview onInsert={onInsert} restaurantId={id} loadData={loadData} />
         </Grid>
         <Grid item lg={6} md={6} sm={12} xs={12}>
           <Menu />
           <Map />
         </Grid>
         <Grid item lg={6} md={6} sm={12} xs={12}>
-          <Review reviews={reviews}/>
+          <Review reviews={reviews} />
         </Grid>
       </Grid>
     </div>

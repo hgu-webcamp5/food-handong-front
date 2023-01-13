@@ -42,12 +42,12 @@ function Review({reviews}) {
         {reviews.map((review) => (
             <Grid container sx={{ paddingTop: 3 }}>
             <Grid item xs={2}>
-              <Avatar src={userImgUrl} sx={{ width: 73, height: 73, marginTop: 5 }} aria-label="김성경">
-                김
+              <Avatar src={review.profileUrl} sx={{ width: 73, height: 73, marginTop: 5 }} aria-label={review.userName}>
+                {review.userName}
               </Avatar>
             </Grid>
             <Grid item xs={10}>
-              <ReviewContent review={review} key={review.id}/>
+              <ReviewContent reviewObj={review} key={review.id}/>
              </Grid>
            </Grid>
         ))}
