@@ -8,6 +8,7 @@ import Main from './pages/Main';
 import Page404 from './pages/Page404';
 import Profile from './pages/Profile';
 import Restaurant from './pages/Restaurant';
+import Addform from './pages/Login/Addform';
 
 export const Container = styled(MuiContainer)(({ theme }) => ({
   paddingTop: theme.mixins.toolbar.minHeight * 2,
@@ -21,6 +22,7 @@ function Router() {
         <Routes>
           <Route path="/" element={<Main />} />
           <Route path="/login" element={<Login />} />
+          <Route path='/login/addform' element={<Addform />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/restaurant/:id" element={<Restaurant />} />
           <Route path="/dashboard" element={<Dashboard />} />
