@@ -11,6 +11,7 @@ import {
 
     Grid,
 } from "@mui/material";
+import {Link} from "react-router-dom";
 
 import SvgIcon from "@mui/material/SvgIcon";
 
@@ -29,6 +30,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 
 import { Image } from 'mui-image'
+import {getRestaurants} from "./apis/restaurants";
 
 const SideBar = styled(Paper)(
     {
@@ -69,97 +71,97 @@ function Main() {
     const [searchWord , setSearchWord] = useState("");
 
     const [sort, setSort] = useState("평점 순");
-    const data = [
-        {
-            name: "샤브20",
-            where: "장성동",
-            menu: "평일런치\n평일디너,주말,공휴일",
-            category: "육류",
-            recommendation: true,
-            star: 4.8,
-            heart: 2,
-            comment: 5,
-            img : `${img1}`,
-        },
-        {
-            name: "언양닭칼국수",
-            where: "흥해읍",
-            menu: "닭칼국수\n언양식칼국수",
-            category: "한식",
-            recommendation: false,
-            star: 5.0,
-            heart: 7,
-            comment: 9,
-            img : `${img2}`,
-        },
-        {
-            name: "라멘구루마",
-            where: "양덕동",
-            menu: "부타시오라멘\n아카이부타시오라멘",
-            category: "회,일식",
-            recommendation: false,
-            star: 5.0,
-            heart: 7,
-            comment: 5,
-            img : `${img3}`,
-        },
-        {
-            name: "으뜸이네",
-            where: "양덕동",
-            menu: "순쌀떡볶이\n찰순대",
-            category: "분식",
-            recommendation: false,
-            star: 5.0,
-            heart: 2,
-            comment: 4,
-            img : `${img4}`,
-        },
-        {
-            name: "류&돈까스",
-            where: "양덕동",
-            menu: "히레(안심)까스(3pcs)\n로스(등심)까스",
-            category: "회,일식",
-            recommendation: false,
-            star: 5.0,
-            heart: 3,
-            comment: 3,
-            img : `${img5}`,
-        },
-        {
-            name: "카페 1703",
-            where: "송라면",
-            menu: "1703에이드\n햄치즈크레페",
-            category: "카페",
-            recommendation: false,
-            star: 5.0,
-            heart: 1,
-            comment: 3,
-            img : `${img6}`,
-        },
-        {
-            name: "샤브20",
-            where: "장성동",
-            menu: "평일런치\n평일디너,주말,공휴일",
-            category: "육류",
-            recommendation: true,
-            star: 4.8,
-            heart: 2,
-            comment: 5,
-            img : `${img7}`,
-        },
-        {
-            name: "언양닭칼국수",
-            where: "흥해읍",
-            menu: "닭칼국수\n언양식칼국수",
-            category: "한식",
-            recommendation: false,
-            star: 5.0,
-            heart: 7,
-            comment: 9,
-            img : `${img8}`,
-        },
-    ];
-    const [restaurants ,setRestaurants] = useState(data);
+    // const data = [
+    //     {
+    //         name: "샤브20",
+    //         where: "장성동",
+    //         menu: "평일런치\n평일디너,주말,공휴일",
+    //         category: "육류",
+    //         recommendation: true,
+    //         star: 4.8,
+    //         heart: 2,
+    //         comment: 5,
+    //         img : `${img1}`,
+    //     },
+    //     {
+    //         name: "언양닭칼국수",
+    //         where: "흥해읍",
+    //         menu: "닭칼국수\n언양식칼국수",
+    //         category: "한식",
+    //         recommendation: false,
+    //         star: 5.0,
+    //         heart: 7,
+    //         comment: 9,
+    //         img : `${img2}`,
+    //     },
+    //     {
+    //         name: "라멘구루마",
+    //         where: "양덕동",
+    //         menu: "부타시오라멘\n아카이부타시오라멘",
+    //         category: "회,일식",
+    //         recommendation: false,
+    //         star: 5.0,
+    //         heart: 7,
+    //         comment: 5,
+    //         img : `${img3}`,
+    //     },
+    //     {
+    //         name: "으뜸이네",
+    //         where: "양덕동",
+    //         menu: "순쌀떡볶이\n찰순대",
+    //         category: "분식",
+    //         recommendation: false,
+    //         star: 5.0,
+    //         heart: 2,
+    //         comment: 4,
+    //         img : `${img4}`,
+    //     },
+    //     {
+    //         name: "류&돈까스",
+    //         where: "양덕동",
+    //         menu: "히레(안심)까스(3pcs)\n로스(등심)까스",
+    //         category: "회,일식",
+    //         recommendation: false,
+    //         star: 5.0,
+    //         heart: 3,
+    //         comment: 3,
+    //         img : `${img5}`,
+    //     },
+    //     {
+    //         name: "카페 1703",
+    //         where: "송라면",
+    //         menu: "1703에이드\n햄치즈크레페",
+    //         category: "카페",
+    //         recommendation: false,
+    //         star: 5.0,
+    //         heart: 1,
+    //         comment: 3,
+    //         img : `${img6}`,
+    //     },
+    //     {
+    //         name: "샤브20",
+    //         where: "장성동",
+    //         menu: "평일런치\n평일디너,주말,공휴일",
+    //         category: "육류",
+    //         recommendation: true,
+    //         star: 4.8,
+    //         heart: 2,
+    //         comment: 5,
+    //         img : `${img7}`,
+    //     },
+    //     {
+    //         name: "언양닭칼국수",
+    //         where: "흥해읍",
+    //         menu: "닭칼국수\n언양식칼국수",
+    //         category: "한식",
+    //         recommendation: false,
+    //         star: 5.0,
+    //         heart: 7,
+    //         comment: 9,
+    //         img : `${img8}`,
+    //     },
+    // ];
+    const [restaurants ,setRestaurants] = useState([]);
     const [reviews ] = useState([
         {
             text: "맛있었어요ㅎㅎ",
@@ -196,9 +198,9 @@ function Main() {
         setCategoryFilter(event.target.outerText.split(' ')[0]);
     }
 
-    useEffect(() => {
-        setRestaurants(data.filter(restaurant => restaurant.name.includes(searchWord)));
-    }, [searchWord] );
+    // useEffect(() => {
+    //     setRestaurants(data.filter(restaurant => restaurant.name.includes(searchWord)));
+    // }, [searchWord] );
 
     useEffect( () => {
     } , [categoryFilter])
@@ -229,6 +231,15 @@ function Main() {
     };
 
     sortByStandard();
+
+    useEffect(()=> {
+        const loadData = async ()=> {
+            const data = await getRestaurants();
+            setRestaurants(data.map(item=> {return {...item, heart:1, star: 4, comment:2}}));
+            // setRestaurants(data);
+        }
+        loadData();
+    },[]);
 
 
     return(
@@ -366,7 +377,11 @@ function Main() {
                             {(categoryFilter !== "전체보기" ? restaurants.filter((restaurant) => restaurant.category === categoryFilter) : restaurants)
                                 .map((restaurant,index) => (
 
-                                    <Item key={index} elevation={10} sx={{
+                                    <Item key={index}
+                                          component={Link}
+                                          to={`restaurant/${restaurant.id}`}
+                                          elevation={10}
+                                          sx={{
                                         '&:hover': {
                                             // backgroundColor: 'action.hover',
                                             opacity: [0.8, 0.8, 0.8],
@@ -376,10 +391,10 @@ function Main() {
                                         },
                                         p:1,
                                     }}>
-                                        <Box component="div" id="block-image" sx={{display: 'block', width:120 , height:120,
+                                        <Box id="block-image" sx={{display: 'block', width:120 , height:120,
                                             ml:-3, mt:-3, mr:2
                                             , float:"left"}}>
-                                            <Image src={restaurant.img} sx={{border:0 ,borderRadius:3,borderColor:'text.secondary',
+                                            <Image src={restaurant.imageUrl} sx={{border:0 ,borderRadius:3,borderColor:'text.secondary',
                                                 '&:hover': {
                                                     // backgroundColor: 'action.hover',
                                                     borderColor: 'default',
@@ -388,13 +403,13 @@ function Main() {
                                                 },}} alt="img" />
                                         </Box>
                                         <Box component="div" id="block-firstLine" sx={{display: 'block'}}>
-                                            <Typography variant="body1" sx={{float: 'left' , fontWeight:'bold'}} >{restaurant.name}</Typography> <Typography variant="body2" sx={{float: 'right', fontWeight: 'bold'}} >{restaurant.category}</Typography>
+                                            <Typography variant="body1" sx={{float: 'left' , fontWeight:'bold'}} >{restaurant.name}</Typography> <Typography variant="body2" sx={{float: 'right', fontWeight: 'bold'}} >{restaurant.category.name}</Typography>
                                         </Box>
                                         <Box component="div" id="block-secondLine" sx={{display: 'block', mt : 3.5}}>
-                                            <Typography variant="body2" sx={{ mt:1, float:'left' , fontWeight:'bold'}}>{restaurant.where}</Typography> {restaurant.recommendation ? <Typography variant="body2" sx={{ float:'right', color:"error.main", fontWeight:'bold'}}>추천!</Typography> : null}
+                                            <Typography variant="body2" sx={{ mt:1, float:'left' , fontWeight:'bold'}}>{restaurant.dong}</Typography> {restaurant.recommendation ? <Typography variant="body2" sx={{ float:'right', color:"error.main", fontWeight:'bold'}}>추천!</Typography> : null}
                                         </Box>
                                         <Box component="div" id="block-thirdLine" sx={{display: 'block' , mt: 8}}>
-                                            <Typography variant="body2" sx={{whiteSpace: 'pre-wrap', fontWeight:'bold' , color:'text.secondary'}}>{restaurant.menu}</Typography>
+                                            {restaurant.menus.slice(0, 2).map(menu => <Typography key={menu.id} variant="body2" sx={{whiteSpace: 'pre-wrap', fontWeight:'bold' , color:'text.secondary'}}>{menu.name}</Typography>)}
                                         </Box>
 
                                         <Box id="block-lastLine">
