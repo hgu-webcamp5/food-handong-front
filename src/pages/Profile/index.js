@@ -43,22 +43,12 @@ function Profile() {
           />
           <TextField
             className={styles.textField}
-            label="Age"
+            label="Nickname"
             color="secondary"
             size="small"
             fullWidth
           />
-          <FormControl className={styles.textField}>
-            <FormLabel id="demo-row-radio-buttons-group-label">Gender</FormLabel>
-            <RadioGroup
-              row
-              aria-labelledby="demo-row-radio-buttons-group-label"
-              name="row-radio-buttons-group"
-            >
-              <FormControlLabel value="female" control={<Radio />} label="Female" />
-              <FormControlLabel value="male" control={<Radio />} label="Male" />
-            </RadioGroup>
-          </FormControl>
+         
 
           <Box className={styles.submitBtnContainer}>
             <Button
