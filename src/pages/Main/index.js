@@ -235,8 +235,8 @@ function Main() {
     useEffect(()=> {
         const loadData = async ()=> {
             const data = await getRestaurants();
-            setRestaurants(data.map(item=> {return {...item, heart:1, star: 4, comment:2}}));
-            // setRestaurants(data);
+            // setRestaurants(data.map(item=> {return {...item, heart:1, star: 4, comment:2}}));
+            setRestaurants(data);
         }
         loadData();
     },[]);
@@ -416,7 +416,7 @@ function Main() {
 
                                             <Typography  variant="body2" sx={{float:'right'}}><Comment color={"gray"}/> {restaurant.comment}</Typography>
                                             <Typography variant="body2" sx={{float:'right'}}><Heart color={"error.main"}/> {restaurant.heart}</Typography>
-                                            <Typography variant="body2" sx={{float:'right'}}><Star color={"orange"}/> {restaurant.star}</Typography>
+                                            <Typography variant="body2" sx={{float:'right'}}><Star color={"orange"}/> {restaurant.rate}</Typography>
 
                                         </Box>
 
