@@ -1,6 +1,6 @@
 .root {
   width: 100%;
-  min-height: calc(100vh - 64px);
+  min-height: calc(100vh - 56px);
   margin-top: -50px;
   display: flex;
   justify-content: center;
@@ -52,4 +52,18 @@
 .footer {
   position: fixed;
   bottom: 0;
+}
+
+.apiBtn {
+  background-color: white;
+  display: flex;
+  height: 100px;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}
+
+img {
+  width: 35px;
+  border-radius: 7px;
 }
