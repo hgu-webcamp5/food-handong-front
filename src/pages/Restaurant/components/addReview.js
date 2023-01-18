@@ -14,9 +14,11 @@ import RestaurantIcon from '@mui/icons-material/Restaurant';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import { addReview } from '../apis/review';
 import AWS from 'aws-sdk';
+import { useRecoilValue } from 'recoil';
+import { userState } from '../../../store/atoms';
 
 function AddReview({ onInsert, restaurantId, loadData }) {
-  const userId = 3;
+  const user = useRecoilValue(userState);
   const [textValue, setTextValue] = useState('');
   const [rateValue, setRateValue] = useState(0);
   const [image, setImage] = useState(null);
@@ -48,11 +50,15 @@ function AddReview({ onInsert, restaurantId, loadData }) {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    if (!user) {
+      alert('로그인이 필요한 서비스입니다.');
+      return;
+    }
     const reviewObj = {
       review: textValue,
       rating: rateValue,
       restaurantId,
-      userId,
+      userId: user.userId,
       imageUrl: image,
     };
     await addReview(reviewObj);
@@ -79,14 +85,14 @@ function AddReview({ onInsert, restaurantId, loadData }) {
     //   return;
     // }
     uploadFile(e.target.files[0]);
-    setImage(`${process.env.REACT_APP_S3_STORAGE}/user-${userId}/${e.target.files[0].name}`);
+    setImage(`${process.env.REACT_APP_S3_STORAGE}/user-${user.userId}/${e.target.files[0].name}`);
   };
   const uploadFile = (file) => {
     const params = {
       ACL: 'public-read',
       Body: file,
       Bucket: process.env.REACT_APP_S3_BUCKET,
-      Key: `upload/student-${userId}/` + file.name,
+      Key: `upload/student-${user.userId}/` + file.name,
       ContentType: 'image/jpeg',
     };
 
