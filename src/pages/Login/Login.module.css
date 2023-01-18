@@ -6,7 +6,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgb(249 250 251);
+  /* background-color: rgb(249 250 251); */
 }
 
 .loader {
@@ -55,7 +55,7 @@
   bottom: 0;
 }
 
-.apiBtn{
+.apiBtn {
   background-color: white;
   display: flex;
   height: 100px;
@@ -64,7 +64,11 @@
   align-items: center;
 }
 
-img{
-  width: 35px; 
-  border-radius: 7px;
+.addFormBtnContainer {
+  display: flex;
+}
+
+.addFormBtn {
+  display: flex;
+  margin-right: 15px;
 }

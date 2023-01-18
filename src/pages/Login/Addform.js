@@ -105,7 +105,7 @@ function Addform() {
           />
           <Box className={styles.submitBtnContainer}>
             <Button type="submit" variant="contained" color="primary">
-              회원가입
+              가입하기
             </Button>
           </Box>
         </Paper>

@@ -24,7 +24,7 @@ import { display } from '@mui/system';
 const pages = [
   { name: '메인', path: '/' },
   { name: '로그인', path: '/login' },
-  { name: '프로필', path: '/profile' },
+  { name: '회원가입', path: '/login/addform' },
   { name: '식당', path: '/restaurant/0' },
   { name: '대시보드', path: '/dashboard' },
 ];
@@ -58,7 +58,7 @@ function Header() {
     // window.Kakao.API.request({url:'/v1/user/unlink'})
     handleCloseUserMenu();
   };
-  
+
   return (
     <AppBar position="fixed" color="inherit" sx={{ boxShadow: 3 }} enableColorOnDark>
       <Container maxWidth="lg">

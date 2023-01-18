@@ -64,10 +64,19 @@ function Login() {
             helperText={errors?.password?.message}
             type="password"
           />
-          <Button variant="contained" color="primary">
-            <Link to="addform" color='primary.contrastText'>회원가입</Link>
-          </Button>
-          <KakaoLogin></KakaoLogin>
+          <Box className={styles.addFormBtnContainer}>
+            <Button
+              className={styles.addFormBtn}
+              variant="contained"
+              color="primary"
+              component={Link}
+              to="addform"
+            >
+              회원가입
+            </Button>
+            <KakaoLogin></KakaoLogin>
+          </Box>
+
           <Box className={styles.submitBtnContainer}>
             <Button type="submit" variant="contained" color="primary">
               Log In
