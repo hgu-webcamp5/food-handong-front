@@ -11,7 +11,6 @@ import Restaurant from './pages/Restaurant';
 import Addform from './pages/Login/Addform';
 import KakaoLogin from './pages/Login/Kakao';
 import KakaoProfile from './pages/Login/KakaoProfile';
-import GoogleLogin from './pages/Login/GoogleLogin';
 import Auth from './Auth';
 import { useRecoilValue } from 'recoil';
 import { userState } from './store/atoms';
@@ -31,7 +30,6 @@ function Router() {
           {!user && <Route path="/login" element={<Login />} />}
           {!user &&  <Route path="/login/addform" element={<Addform />} />}
           <Route path="/oauth/kakao/callback" element={<KakaoLogin />} />
-          {/* <Route path="/login/google" element={<GoogleLogin />} /> */}
           <Route path="/Kakaoprofile" element={<KakaoProfile />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/restaurant/:id" element={<Restaurant />} />

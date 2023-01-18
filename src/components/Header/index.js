@@ -19,6 +19,7 @@ import logo192 from '../../assets/images/logo192.png';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useRecoilValue, useResetRecoilState } from 'recoil';
 import { userState } from '../../store/atoms';
+import { display } from '@mui/system';
 
 const pages = [
   { name: '메인', path: '/' },
@@ -28,7 +29,7 @@ const pages = [
   { name: '대시보드', path: '/dashboard' },
 ];
 
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const settings = ['Profile', 'Account', 'Dashboard'];
 
 function Header() {
   const user = useRecoilValue(userState);
@@ -57,7 +58,7 @@ function Header() {
     // window.Kakao.API.request({url:'/v1/user/unlink'})
     handleCloseUserMenu();
   };
-
+  
   return (
     <AppBar position="fixed" color="inherit" sx={{ boxShadow: 3 }} enableColorOnDark>
       <Container maxWidth="lg">
@@ -195,7 +196,7 @@ function Header() {
                   </MenuItem>
                 ))}
                 <MenuItem onClick={logout}>
-                  <Typography textAlign="center">로그아웃</Typography>
+                  <Typography textAlign="center">Logout</Typography>
                 </MenuItem>
               </Menu>
             </Box>
