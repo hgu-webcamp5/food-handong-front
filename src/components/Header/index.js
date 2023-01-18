@@ -17,6 +17,8 @@ import { SERVICE_NAME } from '../../utils/commons';
 import DarkModeToggle from '../DarkModeToggle';
 import logo192 from '../../assets/images/logo192.png';
 import MenuIcon from '@mui/icons-material/Menu';
+import { useRecoilValue, useResetRecoilState } from 'recoil';
+import { userState } from '../../store/atoms';
 
 const pages = [
   { name: '메인', path: '/' },
@@ -29,6 +31,8 @@ const pages = [
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function Header() {
+  const user = useRecoilValue(userState);
+  const resetUser = useResetRecoilState(userState);
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
 
@@ -45,6 +49,13 @@ function Header() {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  const logout = () => {
+    resetUser();
+    window.Kakao.Auth.logout();
+    // window.Kakao.API.request({url:'/v1/user/unlink'})
+    handleCloseUserMenu();
   };
 
   return (
@@ -155,36 +166,44 @@ function Header() {
               </Button>
             ))}
           </Box>
-
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+          {user ? (
+            <Box sx={{ flexGrow: 0 }}>
+              <Tooltip title={user.name}>
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar alt="Remy Sharp" src={user.profileUrl} />
+                </IconButton>
+              </Tooltip>
+              <Menu
+                sx={{ mt: '45px' }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                {settings.map((setting) => (
+                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                    <Typography textAlign="center">{setting}</Typography>
+                  </MenuItem>
+                ))}
+                <MenuItem onClick={logout}>
+                  <Typography textAlign="center">로그아웃</Typography>
                 </MenuItem>
-              ))}
-            </Menu>
-          </Box>
+              </Menu>
+            </Box>
+          ) : (
+            <Button component={Link} to="/login">
+              로그인
+            </Button>
+          )}
           <Box sx={{ ml: 1 }}>
             <DarkModeToggle />
           </Box>

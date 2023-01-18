@@ -5,6 +5,11 @@ export const isLoginState = atom({
   default: false,
 });
 
+export const userState = atom({
+  key: 'user',
+  default: null,
+});
+
 export const isDarkState = atom({
   key: 'isDark',
   default: localStorage.getItem('darkMode') === 'true',
