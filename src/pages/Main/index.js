@@ -16,14 +16,14 @@ import {Link} from "react-router-dom";
 import SvgIcon from "@mui/material/SvgIcon";
 
 import {useEffect, useState} from "react";
-import img1 from './img/main_img_1.jpg';
-import img2 from './img/main_img_2.jpg';
-import img3 from './img/main_img_3.jpg';
-import img4 from './img/main_img_4.jpg';
-import img5 from './img/main_img_5.jpg';
-import img6 from './img/main_img_6.jpg';
-import img7 from './img/main_img_7.jpg';
-import img8 from './img/main_img_8.jpg';
+// import img1 from './img/main_img_1.jpg';
+// import img2 from './img/main_img_2.jpg';
+// import img3 from './img/main_img_3.jpg';
+// import img4 from './img/main_img_4.jpg';
+// import img5 from './img/main_img_5.jpg';
+// import img6 from './img/main_img_6.jpg';
+// import img7 from './img/main_img_7.jpg';
+// import img8 from './img/main_img_8.jpg';
 
 import StarIcon from '@mui/icons-material/Star';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -34,16 +34,15 @@ import {getRestaurants} from "./apis/restaurants";
 
 const SideBar = styled(Paper)(
     {
-        height: "97%",
+        // position : "fixed",
+        height: "100%",
         minWidth: 150,
         maxWidth: 200,
         border: 1,
-
     });
 const Item = styled(Paper)(
 
     {
-        // textAlign: 'center',
         color: 'secondary.contratext',
         height: 140,
         lineHeight: '60px',
@@ -180,10 +179,28 @@ function Main() {
             name: "커피유야"
         }
     ]);
-    const [categories] = useState(["전체보기 (12)" , "한식 (31)" ,
-        "회,일식 (26)" , "중식 (12)", "양식 (13)", "아시안 (2)" , "분식 (5)" , "육류 (18)" , "치킨 (3)" ,
-        "술집 (5)" , "카페 (7)" , "디저트 (2)"]);
+    const categories =["전체보기" , "한식" ,
+        "회,일식" , "중식", "양식", "아시안" , "분식" , "육류" , "치킨" ,
+        "술집" , "카페" , "디저트"];
     const [categoryFilter , setCategoryFilter] = useState("전체보기");
+    const [categoryCnt , setCategoryCnt] = useState([]);
+
+
+    useEffect(  ()=>{
+        const categoryCountFunc = async ()=> {
+            const data = await getRestaurants();
+            let categoryCount = [];
+
+            categories.map((category, index) => {
+                categoryCount[index] = data.filter(restaurant => restaurant.category.name === category).length;
+            })
+
+            setCategoryCnt(categoryCount);
+        }
+        categoryCountFunc();
+    },[]);
+
+
 
     const handleChangeSort = (event) => {
         setSort(event.target.value);
@@ -198,20 +215,20 @@ function Main() {
         setCategoryFilter(event.target.outerText.split(' ')[0]);
     }
 
-    // useEffect(() => {
-    //     setRestaurants(data.filter(restaurant => restaurant.name.includes(searchWord)));
-    // }, [searchWord] );
 
     useEffect( () => {
     } , [categoryFilter])
 
     const sortByStandard = () => {
 
+
         if(sort === "평점 순"){
             restaurants.sort(function(a,b){
                 if(a.star > b.star) return -1;
                 if(a.star === b.star) return 0;
                 if(a.star < b.star) return 1;
+
+                return 0;
             })
         }
         else if(sort === "좋아요 순"){
@@ -219,6 +236,7 @@ function Main() {
                 if(a.heart > b.heart) return -1;
                 if(a.heart === b.heart) return 0;
                 if(a.heart < b.heart) return 1;
+                return 0;
             })
         }
         else if(sort === "댓글 순"){
@@ -226,24 +244,29 @@ function Main() {
                 if(a.comment > b.comment) return -1;
                 if(a.comment === b.comment) return 0;
                 if(a.comment < b.comment) return 1;
+                return 0;
             })
         }
     };
 
     sortByStandard();
 
-    useEffect(()=> {
+    useEffect(() => {
         const loadData = async ()=> {
             const data = await getRestaurants();
-            setRestaurants(data.map(item=> {return {...item, heart:1, star: 4, comment:2}}));
-            // setRestaurants(data);
+            await setRestaurants(data);
+
+            setRestaurants(data.filter(restaurant => restaurant.name.includes(searchWord)));
         }
         loadData();
-    },[]);
+
+    }, [searchWord] );
 
 
     return(
         <div>
+
+
             <div >
                 <Grid container columnSpacing={5} columns={{ xs: 12, sm: 10, md: 12 }} sx={{ width:"120%" ,ml:"-12%" }} >
 
@@ -275,7 +298,7 @@ function Main() {
                                             },
                                         }}
                                                     value={category}
-                                                    onClick={handleClickCategoryFilter}>{category}</Typography>
+                                                    onClick={handleClickCategoryFilter}>{category} ({categoryCnt[index]})</Typography>
                                     ))}
                                 </Box>
                             </Box>
@@ -374,7 +397,7 @@ function Main() {
                                 gap: 10,
                             }}
                         >
-                            {(categoryFilter !== "전체보기" ? restaurants.filter((restaurant) => restaurant.category === categoryFilter) : restaurants)
+                            {(categoryFilter !== "전체보기" ? restaurants.filter((restaurant) => restaurant.category.name === categoryFilter) : restaurants)
                                 .map((restaurant,index) => (
 
                                     <Item key={index}
@@ -412,11 +435,11 @@ function Main() {
                                             {restaurant.menus.slice(0, 2).map(menu => <Typography key={menu.id} variant="body2" sx={{whiteSpace: 'pre-wrap', fontWeight:'bold' , color:'text.secondary'}}>{menu.name}</Typography>)}
                                         </Box>
 
-                                        <Box id="block-lastLine">
+                                        <Box id="block-lastLine" sx={{}}>
 
                                             <Typography  variant="body2" sx={{float:'right'}}><Comment color={"gray"}/> {restaurant.comment}</Typography>
                                             <Typography variant="body2" sx={{float:'right'}}><Heart color={"error.main"}/> {restaurant.heart}</Typography>
-                                            <Typography variant="body2" sx={{float:'right'}}><Star color={"orange"}/> {restaurant.star}</Typography>
+                                            <Typography variant="body2" sx={{float:'right'}}><Star color={"orange"}/> {restaurant.rate}</Typography>
 
                                         </Box>
 

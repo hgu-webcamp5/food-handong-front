@@ -23,8 +23,6 @@ function Profile() {
           </Typography>
           <TextField
             className={styles.textField}
-            // disabled
-            // value={user.email}
             label="Email"
             color="secondary"
             size="small"
@@ -32,8 +30,6 @@ function Profile() {
           />
           <TextField
             className={styles.textField}
-            // value={newDisplayName}
-            // onChange={(e) => setNewDisplayName(e.target.value)}
             label="Name"
             color="secondary"
             size="small"
@@ -50,7 +46,6 @@ function Profile() {
 
           <Box className={styles.submitBtnContainer}>
             <Button
-              // onClick={saveProfile}
               variant="contained"
               color="primary"
             >
