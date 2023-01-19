@@ -6,11 +6,10 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import styles from "./a.css";
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import TextField from '@mui/material/TextField';
 import imgA from './profile.png';
 import Restaurant from './restaurant.jpg'
-import Link from '@mui/material/Link';
 import StarIcon from '@mui/icons-material/Star';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
@@ -18,8 +17,15 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Divider from '@mui/material/Divider';
 import Box from '@mui/material/Box';
+import {getRestaurantById} from "../Restaurant/apis/restaurant";
+import {checkLike} from "../Restaurant/apis/like";
+import {getLikeRestaurants} from "./apis/dashboarad";
+import {useRecoilValue} from "recoil";
+import {userState} from "../../store/atoms";
+import {Link} from "react-router-dom";
 
 function Dashboard() {
+  const user = useRecoilValue(userState);
   const email = "21900064@handong.ac.kr";
   const restaurant = [
     "샤브20",
@@ -36,9 +42,19 @@ function Dashboard() {
     "4일전"
   ]
   const [show, toggleShow] = useState(true);
-  const [value, setValue] = useState("Art Dog");
+  const [value, setValue] = useState(user.name);
   let [res, setRestaurant] = useState(false);
   let [rev, showReview] = useState(false);
+  const [likeRestaurants, setLikeRestaurants] = useState([]);
+  const loadData = async () => {
+    if (user) {
+      const response = await getLikeRestaurants(user.userId);
+      setLikeRestaurants(response);
+    }
+  };
+  useEffect(() => {
+    loadData();
+  }, []);
   return (
     <Grid container spacing={10}>
       {/* 프로필 */}
@@ -46,7 +62,7 @@ function Dashboard() {
         <>
           <img
             alt=''
-            src={imgA}
+            src={user.profileUrl}
             width={250}
             height={250}
             style={{
@@ -110,7 +126,7 @@ function Dashboard() {
           최근 좋아요한 식당
         </Typography>
         <br />
-        <Link href="#" underline="none">
+        <Link style={{ textDecoration: 'none'}}>
           {/* 더보기 누르기전 큰 버전 */}
           {(res==false && rev==false) && <Card sx={{ width: 550, ":hover": {transform: "scale(1.02)"} }}>
             <Grid container>
@@ -118,7 +134,7 @@ function Dashboard() {
                 <CardContent sx={{ paddingRight: 0 }}>
                   <img
                     alt=''
-                    src={Restaurant}
+                    src={likeRestaurants[0]?.imageUrl}
                     width={110}
                     height={110}
                     style={{
@@ -132,25 +148,25 @@ function Dashboard() {
               <Grid item xs={5}>
                 <CardContent sx={{ marginLeft: -9 }}>
                   <Typography variant="h5" component="div">
-                    {restaurant[0]}
+                    {likeRestaurants[0]?.name}
                   </Typography>
                   <Typography sx={{ fontSize: 14 }} gutterBottom>
-                    {restaurant[1]}
+                    {likeRestaurants[0]?.dong}
                   </Typography>
                   <Typography variant="body2" sx={{ mb: 1.5, marginTop: 1 }} color="text.secondary">
-                    {restaurant[2]}
+                    {likeRestaurants[0]?.openingHours}
                   </Typography>
                   <Typography variant="body2" sx={{ mb: 1.5, marginTop: 1 }} color="text.secondary">
-                    <StarIcon sx={{color: '#ffcc33', fontSize: 20, marginBottom: -0.5}}/> {score[0]}
-                    <FavoriteIcon sx={{color: '#ff6666', fontSize: 19, marginLeft: 1, marginBottom: -0.5}}/> {score[1]} 
-                    <ChatBubbleIcon sx={{color: "#33cccc", fontSize: 18, marginLeft: 1, marginBottom: -0.5}}/> {score[2]}
+                    <StarIcon sx={{color: '#ffcc33', fontSize: 20, marginBottom: -0.5}}/> {likeRestaurants[0]?.rate}
+                    <FavoriteIcon sx={{color: '#ff6666', fontSize: 19, marginLeft: 1, marginBottom: -0.5}}/> {likeRestaurants[0]?.heart}
+                    <ChatBubbleIcon sx={{color: "#33cccc", fontSize: 18, marginLeft: 1, marginBottom: -0.5}}/> {likeRestaurants[0]?.comment}
                   </Typography>
                 </CardContent>
               </Grid>
               <Grid item xs={2}>
                 <CardContent>
                   <Typography sx={{ fontSize: 14, textAlign: "end" }} gutterBottom>
-                    {restaurant[3]}
+                    {likeRestaurants[0]?.category.name}
                   </Typography>
                 </CardContent>
                 <CardActions sx={{ marginTop: 5 }}>
@@ -166,7 +182,7 @@ function Dashboard() {
                 <CardContent sx={{ paddingRight: 0 }}>
                   <img
                     alt=''
-                    src={Restaurant}
+                    src={likeRestaurants[0]?.imageUrl}
                     width={90}
                     height={90}
                     style={{
@@ -180,18 +196,18 @@ function Dashboard() {
               <Grid item xs={5}>
                 <CardContent sx={{ marginLeft: -9 }}>
                   <Typography variant="h6" component="div">
-                    {restaurant[0]}
+                    {likeRestaurants[0]?.name}
                   </Typography>
                   <Typography sx={{ fontSize: 13 }} gutterBottom>
-                    {restaurant[1]}
+                    {likeRestaurants[0]?.dong}
                   </Typography>
                   <Typography variant="body2" sx={{ mb: 1.5, marginTop: 1, fontSize: 13 }} color="text.secondary">
-                    {restaurant[2]}
+                    {likeRestaurants[0]?.openingHours}
                   </Typography>
                   <Typography variant="body2" sx={{ mb: 1.5, marginTop: 1, fontSize: 12}} color="text.secondary">
-                    <StarIcon sx={{color: '#ffcc33', fontSize: 18, marginBottom: -0.5}}/> {score[0]}
-                    <FavoriteIcon sx={{color: '#ff6666', fontSize: 17, marginLeft: 1, marginBottom: -0.5}}/> {score[1]} 
-                    <ChatBubbleIcon sx={{color: "#33cccc", fontSize: 16, marginLeft: 1, marginBottom: -0.5}}/> {score[2]}
+                    <StarIcon sx={{color: '#ffcc33', fontSize: 18, marginBottom: -0.5}}/> {likeRestaurants[0]?.rate}
+                    <FavoriteIcon sx={{color: '#ff6666', fontSize: 17, marginLeft: 1, marginBottom: -0.5}}/> {likeRestaurants[0]?.heart}
+                    <ChatBubbleIcon sx={{color: "#33cccc", fontSize: 16, marginLeft: 1, marginBottom: -0.5}}/> {likeRestaurants[0]?.commnet}
                   </Typography>
                 </CardContent>
               </Grid>
@@ -232,7 +248,7 @@ function Dashboard() {
                 <Grid item xs={9.5}>
                   <CardContent>
                     <Typography variant="h5" component="div" sx={{ marginBottom: 1 }}>
-                      <Link href="#" underline="hover">
+                      <Link style={{ textDecoration: 'none'}}>
                         {review[0]} ➜
                       </Link>
                     </Typography>
@@ -282,7 +298,7 @@ function Dashboard() {
                 <Grid item xs={9}>
                   <CardContent>
                     <Typography variant="h5" component="div" sx={{ marginBottom: 1 }}>
-                      <Link href="#" underline="hover">
+                      <Link style={{ textDecoration: 'none'}}>
                         {review[0]} ➜
                       </Link>
                     </Typography>
@@ -317,15 +333,16 @@ function Dashboard() {
       {(res==true&&rev==false) && <Grid item xs={4} sx={{ marginLeft: -8, marginRight: -20 }}>
         <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper',textAlign: 'center', fontWeight: 'bold' }}>
           내가 좋아요한 식당들
-          <Link href="#" underline="none">
-            <ListItem alignItems="flex-start" sx={{":hover": {transform: "scale(1.02)"}}}>     
+          {likeRestaurants.map(item => (
+          <Link to={`/restaurant/${item.id}`} style={{ textDecoration: 'none'}}>
+            <ListItem alignItems="flex-start" sx={{":hover": {transform: "scale(1.02)"}}}>
               <Card sx={{ width: 550, height: 100 }}>
                 <Grid container>
                   <Grid item xs={5}>
                     <CardContent>
                       <img
                         alt=''
-                        src={Restaurant}
+                        src={item.imageUrl}
                         width={50}
                         height={50}
                         style={{
@@ -339,107 +356,30 @@ function Dashboard() {
                   <Grid item xs={7}>
                     <CardContent sx={{ marginLeft: -6, marginTop: -1}}>
                       <Typography variant="h7" component="div">
-                        {restaurant[0]}
+                        {item.name}
                       </Typography>
                       <Typography sx={{ fontSize: 14 }} gutterBottom>
-                        {restaurant[1]}
+                        {item.dong}
                       </Typography>
                       <Typography variant="body2" sx={{ mb: 1.5, marginTop: -0.5, fontSize: 12}} color="text.secondary">
-                        <StarIcon sx={{color: '#ffcc33', fontSize: 18, marginBottom: -0.5}}/> {score[0]}
-                        <FavoriteIcon sx={{color: '#ff6666', fontSize: 17, marginLeft: 1, marginBottom: -0.5}}/> {score[1]} 
-                        <ChatBubbleIcon sx={{color: "#33cccc", fontSize: 16, marginLeft: 1, marginBottom: -0.5}}/> {score[2]}
+                        <StarIcon sx={{color: '#ffcc33', fontSize: 18, marginBottom: -0.5}}/> {item.rate}
+                        <FavoriteIcon sx={{color: '#ff6666', fontSize: 17, marginLeft: 1, marginBottom: -0.5}}/> {item.heart}
+                        <ChatBubbleIcon sx={{color: "#33cccc", fontSize: 16, marginLeft: 1, marginBottom: -0.5}}/> {item.comment}
                       </Typography>
                     </CardContent>
                   </Grid>
                 </Grid>
               </Card>
             </ListItem>
-          </Link>
+          </Link>))}
           <Divider variant="inset" component="li" />
-          <Link href="#" underline="none">
-            <ListItem alignItems="flex-start" sx={{":hover": {transform: "scale(1.02)"}}}>     
-              <Card sx={{ width: 550, height: 100 }}>
-                <Grid container>
-                  <Grid item xs={5}>
-                    <CardContent>
-                      <img
-                        alt=''
-                        src={Restaurant}
-                        width={50}
-                        height={50}
-                        style={{
-                          objectFit: "fill",
-                          margin: 0,
-                          borderRadius: 30
-                        }}
-                      ></img>
-                    </CardContent>
-                  </Grid>
-                  <Grid item xs={7}>
-                    <CardContent sx={{ marginLeft: -6, marginTop: -1}}>
-                      <Typography variant="h7" component="div">
-                        {restaurant[0]}
-                      </Typography>
-                      <Typography sx={{ fontSize: 14 }} gutterBottom>
-                        {restaurant[1]}
-                      </Typography>
-                      <Typography variant="body2" sx={{ mb: 1.5, marginTop: -0.5, fontSize: 12}} color="text.secondary">
-                        <StarIcon sx={{color: '#ffcc33', fontSize: 18, marginBottom: -0.5}}/> {score[0]}
-                        <FavoriteIcon sx={{color: '#ff6666', fontSize: 17, marginLeft: 1, marginBottom: -0.5}}/> {score[1]} 
-                        <ChatBubbleIcon sx={{color: "#33cccc", fontSize: 16, marginLeft: 1, marginBottom: -0.5}}/> {score[2]}
-                      </Typography>
-                    </CardContent>
-                  </Grid>
-                </Grid>
-              </Card>
-            </ListItem>
-          </Link>
-          <Divider variant="inset" component="li" />
-          <Link href="#" underline="none">
-            <ListItem alignItems="flex-start" sx={{":hover": {transform: "scale(1.02)"}}}>     
-              <Card sx={{ width: 550, height: 100 }}>
-                <Grid container>
-                  <Grid item xs={5}>
-                    <CardContent>
-                      <img
-                        alt=''
-                        src={Restaurant}
-                        width={50}
-                        height={50}
-                        style={{
-                          objectFit: "fill",
-                          margin: 0,
-                          borderRadius: 30
-                        }}
-                      ></img>
-                    </CardContent>
-                  </Grid>
-                  <Grid item xs={7}>
-                    <CardContent sx={{ marginLeft: -6, marginTop: -1}}>
-                      <Typography variant="h7" component="div">
-                        {restaurant[0]}
-                      </Typography>
-                      <Typography sx={{ fontSize: 14 }} gutterBottom>
-                        {restaurant[1]}
-                      </Typography>
-                      <Typography variant="body2" sx={{ mb: 1.5, marginTop: -0.5, fontSize: 12}} color="text.secondary">
-                        <StarIcon sx={{color: '#ffcc33', fontSize: 18, marginBottom: -0.5}}/> {score[0]}
-                        <FavoriteIcon sx={{color: '#ff6666', fontSize: 17, marginLeft: 1, marginBottom: -0.5}}/> {score[1]} 
-                        <ChatBubbleIcon sx={{color: "#33cccc", fontSize: 16, marginLeft: 1, marginBottom: -0.5}}/> {score[2]}
-                      </Typography>
-                    </CardContent>
-                  </Grid>
-                </Grid>
-              </Card>
-            </ListItem>
-          </Link>
         </List>
       </Grid>}
       {/* 내가 쓴 리뷰 List*/}
       {(rev==true&&res==false) && <Grid item xs={4} sx={{ marginLeft: -8, marginRight: -20 }}>
         <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper',textAlign: 'center', fontWeight: 'bold' }}>
           내가 쓴 리뷰
-          `<Link href="#" underline="none">
+          `<Link style={{ textDecoration: 'none'}}>
             <ListItem alignItems="flex-start" sx={{":hover": {transform: "scale(1.02)"}}}>
               <Card sx={{ width: 550, height: 100 }}>
                 <Grid container>
@@ -480,7 +420,7 @@ function Dashboard() {
             </ListItem>
           </Link>
           <Divider variant="inset" component="li" />
-          <Link href="#" underline="none">
+          <Link style={{ textDecoration: 'none'}}>
             <ListItem alignItems="flex-start" sx={{":hover": {transform: "scale(1.02)"}}}>
               <Card sx={{ width: 550, height: 100 }}>
                 <Grid container>
@@ -521,7 +461,7 @@ function Dashboard() {
             </ListItem>
           </Link>
           <Divider variant="inset" component="li" />
-          <Link href="#" underline="none">
+          <Link style={{ textDecoration: 'none'}}>
             <ListItem alignItems="flex-start" sx={{":hover": {transform: "scale(1.02)"}}}>
               <Card sx={{ width: 550, height: 100 }}>
                 <Grid container>

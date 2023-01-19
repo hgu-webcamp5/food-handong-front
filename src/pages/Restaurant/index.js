@@ -14,17 +14,39 @@ import AddReview from './components/addReview';
 import { getReviewById, getReviews } from './apis/review';
 import { getRestaurantById } from './apis/restaurant';
 import { useParams } from 'react-router-dom';
+import {addLike, checkLike, unlike} from "./apis/like";
+import {useRecoilValue} from "recoil";
+import {userState} from "../../store/atoms";
 
 const { kakao } = window;
 
 function RestaurantInfo() {
+  const user = useRecoilValue(userState);
   const { id } = useParams();
   const [restaurant, setRestaurant] = useState();
+  const [isLike, setIsLike] = useState(false);
+  const loadData = async () => {
+    const response = await getRestaurantById(id);
+    setRestaurant(response);
+    if (user) {
+      const isLike = await checkLike(user.userId, id);
+      console.log(isLike);
+      setIsLike(isLike);
+    }
+  };
+  const handleLike = async () => {
+    if (!user) {
+      alert("로그인이 필요한 서비스 입니다.");
+      return;
+    }
+    await addLike(user.userId, id);
+    loadData();
+  }
+  const handleUnlike = async () => {
+    await unlike(user.userId, id);
+    loadData();
+  }
   useEffect(() => {
-    const loadData = async () => {
-      const response = await getRestaurantById(id);
-      setRestaurant(response);
-    };
     loadData();
   }, []);
 
@@ -40,8 +62,8 @@ function RestaurantInfo() {
             </Grid>
             <Grid item xs={2}>
               <div>
-                <IconButton sx={{ color: red[400] }} aria-label="add to favorites">
-                  <FavoriteBorderIcon />
+                <IconButton sx={{ color: red[400] }} onClick={isLike ? handleUnlike : handleLike}>
+                  {isLike ? <FavoriteIcon /> : <FavoriteBorderIcon />}
                 </IconButton>
                 <IconButton
                   sx={{ color: yellow[600] }}

@@ -35,7 +35,7 @@ function Router() {
           <Route path="/Kakaoprofile" element={<KakaoProfile />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/restaurant/:id" element={<Restaurant />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+            {user &&  <Route path="/dashboard" element={<Dashboard />} />}
           <Route path="*" element={<Page404 />} />
         </Routes>
       </Container>
