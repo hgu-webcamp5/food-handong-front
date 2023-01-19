@@ -34,11 +34,11 @@ import {getRestaurants} from "./apis/restaurants";
 
 const SideBar = styled(Paper)(
     {
-        height: "97%",
+        // position : "fixed",
+        height: "100%",
         minWidth: 150,
         maxWidth: 200,
         border: 1,
-
     });
 const Item = styled(Paper)(
 
@@ -180,10 +180,32 @@ function Main() {
             name: "커피유야"
         }
     ]);
-    const [categories] = useState(["전체보기 (12)" , "한식 (31)" ,
-        "회,일식 (26)" , "중식 (12)", "양식 (13)", "아시안 (2)" , "분식 (5)" , "육류 (18)" , "치킨 (3)" ,
-        "술집 (5)" , "카페 (7)" , "디저트 (2)"]);
+    // const categories =["전체보기 (12)" , "한식 (31)" ,
+    //     "회,일식 (26)" , "중식 (12)", "양식 (13)", "아시안 (2)" , "분식 (5)" , "육류 (18)" , "치킨 (3)" ,
+    //     "술집 (5)" , "카페 (7)" , "디저트 (2)"];
+    const categories =["전체보기" , "한식" ,
+        "회,일식" , "중식", "양식", "아시안" , "분식" , "육류" , "치킨" ,
+        "술집" , "카페" , "디저트"];
     const [categoryFilter , setCategoryFilter] = useState("전체보기");
+    // const [categoryCount , setCategoryCount ] = useState([]);
+    const [categoryCnt , setCategoryCnt] = useState([]);
+
+
+    useEffect(  ()=>{
+        const categoryCountFunc = async ()=> {
+            const data = await getRestaurants();
+            let categoryCount = [];
+
+            categories.map((category, index) => {
+                categoryCount[index] = data.filter(restaurant => restaurant.category.name === category).length;
+            })
+
+            setCategoryCnt(categoryCount);
+        }
+        categoryCountFunc();
+    },[]);
+
+
 
     const handleChangeSort = (event) => {
         setSort(event.target.value);
@@ -258,6 +280,8 @@ function Main() {
 
     return(
         <div>
+
+
             <div >
                 <Grid container columnSpacing={5} columns={{ xs: 12, sm: 10, md: 12 }} sx={{ width:"120%" ,ml:"-12%" }} >
 
@@ -289,7 +313,7 @@ function Main() {
                                             },
                                         }}
                                                     value={category}
-                                                    onClick={handleClickCategoryFilter}>{category}</Typography>
+                                                    onClick={handleClickCategoryFilter}>{category} ({categoryCnt[index]})</Typography>
                                     ))}
                                 </Box>
                             </Box>
