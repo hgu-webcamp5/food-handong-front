@@ -19,16 +19,17 @@ import logo192 from '../../assets/images/logo192.png';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useRecoilValue, useResetRecoilState } from 'recoil';
 import { userState } from '../../store/atoms';
+import { display } from '@mui/system';
 
 const pages = [
   { name: '메인', path: '/' },
   { name: '로그인', path: '/login' },
-  { name: '프로필', path: '/profile' },
+  { name: '회원가입', path: '/login/addform' },
   { name: '식당', path: '/restaurant/0' },
   { name: '대시보드', path: '/dashboard' },
 ];
 
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const settings = ['Profile', 'Account', 'Dashboard'];
 
 function Header() {
   const user = useRecoilValue(userState);
@@ -195,7 +196,7 @@ function Header() {
                   </MenuItem>
                 ))}
                 <MenuItem onClick={logout}>
-                  <Typography textAlign="center">로그아웃</Typography>
+                  <Typography textAlign="center">Logout</Typography>
                 </MenuItem>
               </Menu>
             </Box>

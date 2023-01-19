@@ -26,6 +26,8 @@ function Addform() {
       .catch((error) => {
         alert('중복되는 ID입니다. 다시 시도해주세요.');
       });
+
+    console.log(data);
   };
 
   return (
@@ -41,8 +43,6 @@ function Addform() {
               required: '아이디를 입력하세요',
               minLength: { value: 6, message: 'ID가 너무 짧습니다' },
             })}
-            // disabled
-            // value={user.email}
             label="ID"
             placeholder="아이디를 입력하세요"
             color="secondary"
@@ -53,8 +53,6 @@ function Addform() {
           <TextField
             className={styles.textField}
             {...register('password', { required: '비밀번호를 입력하세요' })}
-            // value={newDisplayName}
-            // onChange={(e) => setNewDisplayName(e.target.value)}
             label="PASSWORD"
             placeholder="비밀번호를 입력하세요"
             color="secondary"
@@ -66,8 +64,6 @@ function Addform() {
           <TextField
             className={styles.textField}
             {...register('password2', { required: '비밀번호를 확인해주세요' })}
-            // value={newDisplayName}
-            // onChange={(e) => setNewDisplayName(e.target.value)}
             label="PASSWORD 확인"
             placeholder="비밀번호를 확인해주세요"
             color="secondary"
@@ -79,8 +75,6 @@ function Addform() {
           <TextField
             className={styles.textField}
             {...register('email', { required: '이메일을 입력하세요' })}
-            // value={newDisplayName}
-            // onChange={(e) => setNewDisplayName(e.target.value)}
             label="EMAIL"
             placeholder="이메일을 입력하세요"
             color="secondary"
@@ -92,8 +86,6 @@ function Addform() {
           <TextField
             className={styles.textField}
             {...register('name', { required: '이름을 입력하세요' })}
-            // value={newDisplayName}
-            // onChange={(e) => setNewDisplayName(e.target.value)}
             label="NAME"
             placeholder="이름을 입력하세요"
             color="secondary"
@@ -104,8 +96,6 @@ function Addform() {
           <TextField
             className={styles.textField}
             {...register('nickname', { required: '닉네임을 입력하세요' })}
-            // value={newDisplayName}
-            // onChange={(e) => setNewDisplayName(e.target.value)}
             label="NICKNAME"
             placeholder="별명을 입력하세요"
             color="secondary"
@@ -114,13 +104,8 @@ function Addform() {
             helperText={errors?.nickname?.message}
           />
           <Box className={styles.submitBtnContainer}>
-            <Button
-              type="submit"
-              // onClick={saveProfile}
-              variant="contained"
-              color="primary"
-            >
-              회원가입
+            <Button type="submit" variant="contained" color="primary">
+              가입하기
             </Button>
           </Box>
         </Paper>
