@@ -43,7 +43,6 @@ const SideBar = styled(Paper)(
 const Item = styled(Paper)(
 
     {
-        // textAlign: 'center',
         color: 'secondary.contratext',
         height: 140,
         lineHeight: '60px',
@@ -180,14 +179,10 @@ function Main() {
             name: "커피유야"
         }
     ]);
-    // const categories =["전체보기 (12)" , "한식 (31)" ,
-    //     "회,일식 (26)" , "중식 (12)", "양식 (13)", "아시안 (2)" , "분식 (5)" , "육류 (18)" , "치킨 (3)" ,
-    //     "술집 (5)" , "카페 (7)" , "디저트 (2)"];
     const categories =["전체보기" , "한식" ,
         "회,일식" , "중식", "양식", "아시안" , "분식" , "육류" , "치킨" ,
         "술집" , "카페" , "디저트"];
     const [categoryFilter , setCategoryFilter] = useState("전체보기");
-    // const [categoryCount , setCategoryCount ] = useState([]);
     const [categoryCnt , setCategoryCnt] = useState([]);
 
 
@@ -255,20 +250,10 @@ function Main() {
     };
 
     sortByStandard();
-    //
-    // useEffect(()=> {
-    //     const loadData = async ()=> {
-    //         const data = await getRestaurants();
-    //         // setRestaurants(data.map(item=> {return {...item, heart:1, star: 4, comment:2}}));
-    //         setRestaurants(data);
-    //     }
-    //     loadData();
-    // },[]);
 
     useEffect(() => {
         const loadData = async ()=> {
             const data = await getRestaurants();
-            // setRestaurants(data.map(item=> {return {...item, heart:1, star: 4, comment:2}}));
             await setRestaurants(data);
 
             setRestaurants(data.filter(restaurant => restaurant.name.includes(searchWord)));
