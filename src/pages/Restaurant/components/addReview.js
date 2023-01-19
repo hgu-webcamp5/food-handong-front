@@ -22,6 +22,7 @@ function AddReview({ onInsert, restaurantId, loadData }) {
   const [textValue, setTextValue] = useState('');
   const [rateValue, setRateValue] = useState(0);
   const [image, setImage] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   const handleTextChange = (e) => {
     setTextValue(e.target.value);
@@ -31,27 +32,33 @@ function AddReview({ onInsert, restaurantId, loadData }) {
   };
 
   const handleImageUpload = (event) => {
+    // 파일 type 유효성 검사
+    // const file = e.target.files[0];
+    // const fileExt = file.name.split(".").pop();
+    // if (file.type !== "image/jpeg" || fileExt !== "jpg") {
+    //   alert("jpg 파일만 Upload 가능합니다.");
+    //   return;
+    // }
     if (event.target.files && event.target.files[0]) {
       let img = event.target.files[0];
-      setImage(URL.createObjectURL(img));
+      setSelectedImage(URL.createObjectURL(img));
+      uploadFile(img);
+      setImage(`${process.env.REACT_APP_S3_STORAGE}/user-${user.userId}/${img.name}`);
     }
   };
-
-  const onSubmit2 = useCallback(
-    (e) => {
-      console.log('submit');
-      onInsert(textValue, rateValue);
-      setTextValue('');
-      setRateValue(0);
-      e.preventDefault();
-    },
-    [onInsert, textValue, rateValue],
-  );
 
   const onSubmit = async (e) => {
     e.preventDefault();
     if (!user) {
       alert('로그인이 필요한 서비스입니다.');
+      return;
+    }
+    if (!rateValue) {
+      alert('별점을 클릭해주세요.');
+      return;
+    }
+    if (textValue === '') {
+      alert('리뷰를 작성해주세요.');
       return;
     }
     const reviewObj = {
@@ -76,23 +83,12 @@ function AddReview({ onInsert, restaurantId, loadData }) {
     region: process.env.REACT_APP_S3_REGION,
   });
 
-  const handleFileInput = (e) => {
-    // 파일 type 유효성 검사
-    // const file = e.target.files[0];
-    // const fileExt = file.name.split(".").pop();
-    // if (file.type !== "image/jpeg" || fileExt !== "jpg") {
-    //   alert("jpg 파일만 Upload 가능합니다.");
-    //   return;
-    // }
-    uploadFile(e.target.files[0]);
-    setImage(`${process.env.REACT_APP_S3_STORAGE}/user-${user.userId}/${e.target.files[0].name}`);
-  };
   const uploadFile = (file) => {
     const params = {
       ACL: 'public-read',
       Body: file,
       Bucket: process.env.REACT_APP_S3_BUCKET,
-      Key: `upload/student-${user.userId}/` + file.name,
+      Key: `upload/user-${user.userId}/` + file.name,
       ContentType: 'image/jpeg',
     };
 
@@ -137,10 +133,10 @@ function AddReview({ onInsert, restaurantId, loadData }) {
           onChange={handleTextChange}
         />
         <Stack direction="row" spacing={28}>
-          <img src={image} width="100" height="80" style={{ marginTop: 5 }} />
+          <img src={selectedImage} width="100" height="80" style={{ marginTop: 5 }} alt="" />
           <div>
             <IconButton color="primary" aria-label="upload picture" component="label">
-              <input hidden accept="image/*" type="file" onChange={handleFileInput} />
+              <input hidden accept="image/*" type="file" onChange={handleImageUpload} />
               <PhotoCamera />
             </IconButton>
             <Button

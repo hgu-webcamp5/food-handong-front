@@ -62,9 +62,7 @@ function ReviewContent({ reviewObj }) {
             <Rating value={rating} readOnly />
             <Typography style={{ marginLeft: 4, fontSize: 17 }}>{rating}</Typography>
           </div>
-          {imageUrl && (
-            <img style={{ marginBottom: 15 }} src={imageUrl} width="180" height="100" alt="" />
-          )}
+          {imageUrl && <img style={{ marginBottom: 15 }} src={imageUrl} width="180" alt="" />}
           <Typography>{review}</Typography>
 
           <div>

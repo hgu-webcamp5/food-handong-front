@@ -14,9 +14,9 @@ import AddReview from './components/addReview';
 import { getReviewById, getReviews } from './apis/review';
 import { getRestaurantById } from './apis/restaurant';
 import { useParams } from 'react-router-dom';
-import {addLike, checkLike, unlike} from "./apis/like";
-import {useRecoilValue} from "recoil";
-import {userState} from "../../store/atoms";
+import { addLike, checkLike, unlike } from './apis/like';
+import { useRecoilValue } from 'recoil';
+import { userState } from '../../store/atoms';
 
 const { kakao } = window;
 
@@ -36,16 +36,16 @@ function RestaurantInfo() {
   };
   const handleLike = async () => {
     if (!user) {
-      alert("로그인이 필요한 서비스 입니다.");
+      alert('로그인이 필요한 서비스 입니다.');
       return;
     }
     await addLike(user.userId, id);
     loadData();
-  }
+  };
   const handleUnlike = async () => {
     await unlike(user.userId, id);
     loadData();
-  }
+  };
   useEffect(() => {
     loadData();
   }, []);
@@ -98,21 +98,25 @@ function RestaurantInfo() {
                   aria-label="별점"
                 >
                   <GradeIcon />
-                  <Typography sx={{ fontSize: 17, color: yellow[600] }}>4.8</Typography>
+                  <Typography sx={{ fontSize: 17, color: yellow[600] }}>
+                    {restaurant.rate}
+                  </Typography>
                 </IconButton>
                 <IconButton
                   sx={{ color: red[400], paddingTop: 0, paddingRight: 0, size: 'small' }}
                   aria-label="좋아요 수"
                 >
                   <FavoriteIcon />
-                  <Typography sx={{ fontSize: 17, color: red[400] }}>3</Typography>
+                  <Typography sx={{ fontSize: 17, color: red[400] }}>{restaurant.heart}</Typography>
                 </IconButton>
                 <IconButton
                   sx={{ color: teal[400], paddingTop: 0, size: 'small' }}
                   aria-label="리뷰"
                 >
                   <CommentIcon />
-                  <Typography sx={{ fontSize: 17, color: teal[400] }}>2</Typography>
+                  <Typography sx={{ fontSize: 17, color: teal[400] }}>
+                    {restaurant.comment}
+                  </Typography>
                 </IconButton>
               </div>
               <Typography style={{ fontSize: 17 }}>육류</Typography>
@@ -214,19 +218,28 @@ function Map() {
 }
 
 function KakaoMap() {
+  const { id } = useParams();
+  const [restaurant, setRestaurant] = useState();
+  const loadData = async () => {
+    const response = await getRestaurantById(id);
+    setRestaurant(response);
+  };
   useEffect(() => {
-    const lat = 36.103116;
-    const lon = 129.388368;
+    loadData();
+  }, []);
+
+  useEffect(() => {
+    if (!restaurant) return;
     const container = document.getElementById('map');
     const options = {
-      center: new kakao.maps.LatLng(lat, lon),
+      center: new kakao.maps.LatLng(restaurant.latitude, restaurant.longitude),
       level: 3,
     };
     const map = new kakao.maps.Map(container, options); //지도 생성
 
     const marker = new kakao.maps.Marker({
-      position: new kakao.maps.LatLng(lat, lon),
-      title: '한동대',
+      position: new kakao.maps.LatLng(restaurant.latitude, restaurant.longitude),
+      title: restaurant.name,
     });
 
     marker.setMap(map);
@@ -244,7 +257,7 @@ function KakaoMap() {
     //     currLat = 33.450701;
     //     currLon = 126.570667;
     // }
-  }, []);
+  }, [restaurant]);
 
   return <div id="map" style={{ backgroundColor: 'black', width: '100%', height: '400px' }}></div>;
 }

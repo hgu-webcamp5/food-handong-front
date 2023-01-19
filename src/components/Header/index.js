@@ -17,7 +17,7 @@ import { SERVICE_NAME } from '../../utils/commons';
 import DarkModeToggle from '../DarkModeToggle';
 import logo192 from '../../assets/images/logo192.png';
 import MenuIcon from '@mui/icons-material/Menu';
-import { useRecoilValue, useResetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { userState } from '../../store/atoms';
 import { display } from '@mui/system';
 
@@ -32,8 +32,7 @@ const pages = [
 const settings = ['Profile', 'Account', 'Dashboard'];
 
 function Header() {
-  const user = useRecoilValue(userState);
-  const resetUser = useResetRecoilState(userState);
+  const [user, setUser] = useRecoilState(userState);
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
 
@@ -53,8 +52,10 @@ function Header() {
   };
 
   const logout = () => {
-    resetUser();
+    localStorage.setItem('user', JSON.stringify(null));
+    setUser(null);
     window.Kakao.Auth.logout();
+    alert('로그아웃 되었습니다.');
     // window.Kakao.API.request({url:'/v1/user/unlink'})
     handleCloseUserMenu();
   };
@@ -155,7 +156,7 @@ function Header() {
             {SERVICE_NAME}
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
+            {/* {pages.map((page) => (
               <Button
                 key={page.name}
                 component={Link}
@@ -165,7 +166,7 @@ function Header() {
               >
                 {page.name}
               </Button>
-            ))}
+            ))} */}
           </Box>
           {user ? (
             <Box sx={{ flexGrow: 0 }}>
@@ -190,11 +191,9 @@ function Header() {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">{setting}</Typography>
-                  </MenuItem>
-                ))}
+                <MenuItem onClick={handleCloseUserMenu} component={Link} to="/dashboard">
+                  <Typography textAlign="center">대시보드</Typography>
+                </MenuItem>
                 <MenuItem onClick={logout}>
                   <Typography textAlign="center">Logout</Typography>
                 </MenuItem>

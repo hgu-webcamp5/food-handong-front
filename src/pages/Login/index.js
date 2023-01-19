@@ -19,6 +19,7 @@ function Login() {
   const onValid = (data) => {
     loginWithPassword(data.userId, data.password)
       .then((userData) => {
+        localStorage.setItem('user', JSON.stringify(userData));
         setUser(userData);
         navigator('/');
       })

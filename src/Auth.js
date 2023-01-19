@@ -40,6 +40,7 @@ const Auth = () => {
 
         loginWithId(data.id)
           .then((userData) => {
+            localStorage.setItem('user', JSON.stringify(userData));
             setUser(userData);
             history('/');
           })
@@ -51,7 +52,11 @@ const Auth = () => {
               email: data.properties.account_email,
               profileUrl: data.properties.profile_image,
             }).then(() => {
-              history('/login');
+              loginWithId(data.id).then((userData) => {
+                localStorage.setItem('user', JSON.stringify(userData));
+                setUser(userData);
+                history('/');
+              });
             });
           });
       } catch (err) {

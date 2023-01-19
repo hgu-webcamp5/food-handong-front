@@ -1,1 +1,1 @@
-export const SERVICE_NAME = '한동맛나';
+export const SERVICE_NAME = '포항맛집';

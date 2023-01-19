@@ -7,7 +7,7 @@ export const isLoginState = atom({
 
 export const userState = atom({
   key: 'user',
-  default: null,
+  default: JSON.parse(localStorage.getItem('user')),
 });
 
 export const isDarkState = atom({
