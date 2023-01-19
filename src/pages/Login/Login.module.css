@@ -5,7 +5,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgb(249 250 251);
+  /* background-color: rgb(249 250 251); */
 }
 
 .loader {
@@ -63,7 +63,11 @@
   align-items: center;
 }
 
-img {
-  width: 35px;
-  border-radius: 7px;
+.addFormBtnContainer {
+  display: flex;
+}
+
+.addFormBtn {
+  display: flex;
+  margin-right: 15px;
 }
